@@ -1,3 +1,5 @@
+// Autor: Greivin Arguedas
+
 import * as configDao from '../daos/configuracion.dao.js';
 
 export const getConfiguracion = async () => {

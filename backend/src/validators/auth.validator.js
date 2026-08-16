@@ -1,3 +1,5 @@
+// Autor: Greivin Arguedas
+
 import { body } from 'express-validator';
 import { handleValidationErrors } from '../middlewares/validate.middleware.js';
 

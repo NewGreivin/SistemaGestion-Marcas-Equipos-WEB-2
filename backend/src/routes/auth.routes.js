@@ -1,3 +1,5 @@
+// Autor: Greivin Arguedas
+
 import { Router } from 'express';
 import { registro, login, logout, recoverPassword, resetPassword } 
     from '../controllers/auth.controller.js';

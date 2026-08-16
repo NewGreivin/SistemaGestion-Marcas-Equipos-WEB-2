@@ -1,3 +1,5 @@
+// Autor: Greivin Arguedas
+
 import pool from '../config/database.js';
 import Configuracion from '../models/configuracion.model.js';
 

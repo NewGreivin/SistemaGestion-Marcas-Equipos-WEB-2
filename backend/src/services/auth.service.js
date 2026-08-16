@@ -1,3 +1,5 @@
+// Autor: Greivin Arguedas
+
 import bcrypt from 'bcrypt';
 import * as usuariosDao from '../daos/users.dao.js';
 import * as tokensDao from '../daos/tokens.dao.js';

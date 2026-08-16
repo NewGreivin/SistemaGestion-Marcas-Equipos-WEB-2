@@ -1,3 +1,5 @@
+// Autor: Greivin Arguedas
+
 import { validationResult } from 'express-validator';
 import { error } from '../utils/respuestaJson.js';
 

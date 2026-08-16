@@ -1,3 +1,5 @@
+// Autor: Greivin Arguedas
+
 export default class Configuracion {
     constructor({ id, nombre_institucion, rango_ip_permitido, 
         tiempo_maximo_sesion, tamano_maximo_archivos }) {

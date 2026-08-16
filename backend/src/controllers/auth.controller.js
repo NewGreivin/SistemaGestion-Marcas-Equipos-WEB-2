@@ -1,3 +1,5 @@
+// Autor: Greivin Arguedas
+
 import * as authService from '../services/auth.service.js';
 import { exito, error } from '../utils/respuestaJson.js';
 

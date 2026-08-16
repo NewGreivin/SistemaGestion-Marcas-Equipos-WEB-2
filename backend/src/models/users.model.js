@@ -1,3 +1,5 @@
+// Autor: Greivin Arguedas
+
 export default class Usuario {
     constructor({ id, nombre_completo, fecha_nacimiento, correo, username, 
         password_hash, departamento_id, rol_id, departamento, rol }) {

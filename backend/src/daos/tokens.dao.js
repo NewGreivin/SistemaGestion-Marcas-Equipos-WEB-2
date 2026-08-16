@@ -1,3 +1,5 @@
+// Autor: Greivin Arguedas
+
 import pool from '../config/database.js';
 
 export const createToken = async (usuario_id, token, fecha_expiracion) => {

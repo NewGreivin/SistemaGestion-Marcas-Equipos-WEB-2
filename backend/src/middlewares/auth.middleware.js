@@ -1,3 +1,5 @@
+// Autor: Greivin Arguedas
+
 import { error } from '../utils/respuestaJson.js';
 
 export const validarSesion = (req, res, next) => {

@@ -1,3 +1,5 @@
+// Autor: Greivin Arguedas
+
 import * as configService from '../services/config.service.js';
 import { exito, error } from '../utils/respuestaJson.js';
 
