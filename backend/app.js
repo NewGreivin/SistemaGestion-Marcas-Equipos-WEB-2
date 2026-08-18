@@ -8,6 +8,9 @@ import pool from "./src/config/database.js";
 import authRoutes from "./src/routes/auth.routes.js";
 import usuariosRoutes from "./src/routes/users.routes.js";
 import configRoutes from "./src/routes/config.routes.js";
+import prestamoRoutes from "./src/routes/prestamo.routes.js";
+import devolucionRoutes from "./src/routes/devolucion.routes.js";
+import historialRoutes from "./src/routes/historial.routes.js";
 
 const app = express();
 
@@ -46,6 +49,9 @@ app.use(session({
 app.use("/api/auth", authRoutes);
 app.use("/api/usuarios", usuariosRoutes);
 app.use("/api/config", configRoutes);
+app.use("/api/prestamos", prestamoRoutes);
+app.use("/api/devoluciones", devolucionRoutes);
+app.use("/api/historial", historialRoutes);
 
 app.get("/", (req, res) => {
     res.json({
