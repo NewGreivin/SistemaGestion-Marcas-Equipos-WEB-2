@@ -11,6 +11,7 @@ import configRoutes from "./src/routes/config.routes.js";
 import prestamoRoutes from "./src/routes/prestamo.routes.js";
 import devolucionRoutes from "./src/routes/devolucion.routes.js";
 import historialRoutes from "./src/routes/historial.routes.js";
+import equiposRoutes from "./src/routes/equipos.routes.js";
 
 const app = express();
 
@@ -52,6 +53,9 @@ app.use("/api/config", configRoutes);
 app.use("/api/prestamos", prestamoRoutes);
 app.use("/api/devoluciones", devolucionRoutes);
 app.use("/api/historial", historialRoutes);
+app.use("/api/equipos", equiposRoutes);
+
+app.use(express.static("public"));
 
 app.get("/", (req, res) => {
     res.json({
