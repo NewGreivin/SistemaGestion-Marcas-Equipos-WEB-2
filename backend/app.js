@@ -13,6 +13,7 @@ import devolucionRoutes from "./src/routes/devolucion.routes.js";
 import historialRoutes from "./src/routes/historial.routes.js";
 import equiposRoutes from "./src/routes/equipos.routes.js";
 import dispositivosRoutes from "./src/routes/dispositivos.routes.js";
+import departamentoRoutes from "./src/routes/departamento.routes.js";
 
 const app = express();
 
@@ -57,6 +58,7 @@ app.use("/api/historial", historialRoutes);
 app.use("/api/equipos", equiposRoutes);
 app.use(express.static("public"));
 app.use("/api/dispositivos", dispositivosRoutes);
+app.use("/api/departamentos", departamentoRoutes);
 
 app.get("/", (req, res) => {
     res.json({
