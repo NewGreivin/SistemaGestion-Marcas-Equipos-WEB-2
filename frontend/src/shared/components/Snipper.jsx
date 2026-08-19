@@ -1,3 +1,5 @@
+//Autor: Greivin Eliecer A.G
+
 export default function Spinner({ 
   type = 'border',   // 'border' o 'grow'
   color = 'primary', // primary, secondary, success, danger, etc.

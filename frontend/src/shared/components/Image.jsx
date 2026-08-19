@@ -1,3 +1,4 @@
+//Autor: Greivin Eliecer A.G
 
 export default function Imagenes({ 
     url, 

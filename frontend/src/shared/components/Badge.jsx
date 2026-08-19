@@ -1,3 +1,5 @@
+//Autor: Greivin Eliecer A.G
+
 import Icon from './icon';
 /**
  * Badge / Chip — Etiqueta corta para rol, categoría o estado.

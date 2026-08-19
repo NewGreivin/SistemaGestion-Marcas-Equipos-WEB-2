@@ -1,3 +1,5 @@
+//Autor: Greivin Eliecer A.G
+
 import { ICONOS } from "../../themes/iconos";
 
 export default function Icon({ name, className = "" }) {
