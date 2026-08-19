@@ -1,4 +1,4 @@
-import Imagenes from './Imagenes';
+import Imagenes from './Image';
 /**
  * Avatar — Círculo con iniciales o foto de usuario.
  *
