@@ -1,13 +1,14 @@
 //Autor: Greivin Eliecer A.G
 
 export default function Titulo( {
-    tipografia="h1", 
-    texto, 
-    alineado="left", 
-    color_text="white"
-} 
-
-){
+    tipografia = "h1", 
+    texto,
+    children,
+    className = '', 
+    alineado = "left", 
+    color_text, 
+    id,
+}) {
 
     const Tag = tipografia;
 
@@ -15,11 +16,16 @@ export default function Titulo( {
         "left": "text-start",
         "center": "text-center",
         "right": "text-end"
-    }[alineado];
+    }[alineado] || "text-start";
 
-    return(
-        <Tag className={`${tipografia} ${alineacion}`} style={{ color: color_text }}>
-            {texto}
+    const colorStyle = color_text ? { color: color_text } : {};
+    return (
+        <Tag 
+            id={id}
+            className={`${tipografia} ${alineacion} ${className}`}
+            style={colorStyle}
+        >
+            {children ?? texto}
         </Tag>
-    )
+    );
 }
