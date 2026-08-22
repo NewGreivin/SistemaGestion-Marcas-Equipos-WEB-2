@@ -1,45 +1,36 @@
-//Autor: Ricardo Chaves
-
+// Autor: Ricardo Chaves
 import Texto from "./Texto";
 
-export default function TextInput({ id, label, placeholder, value, onChange, required = false, name, disabled = false, size, id_size, className = "" }) {
-
-    const tamano = {
-        "small": "input-group-sm",
-        "default": "",
-        "large": "input-group-lg"
+export default function TextInput({ id, label, placeholder, value, onChange, required = false, name, disabled = false, type = "text", size, className = ""}) {
+    const sizeClass = {
+        "sm": "form-control-sm",
+        "lg": "form-control-lg"
     }[size] || "";
 
-    const idSizeClass = {
-        "small": "inputGroup-sizing-sm",
-        "default": "inputGroup-sizing-default",
-        "large": "inputGroup-sizing-lg"
-    }[id_size] || "";
-
     return (
-        <div className={`mb-3 ${tamano}`}>
-            <Texto
-                texto={
-                    <>
-                        {label}
-                        {required && <span className="text-danger"> *</span>}
-                    </>
-                }
-                alineado="left"
-                color_text="black"
-            />
+        <div className={`mb-3 ${className}`}>
+            {label && (
+                <label htmlFor={id} className="form-label d-flex align-items-center gap-1 mb-1">
+                    <Texto
+                        texto={label}
+                        alineado="left"
+                        color_text="black"
+                        tamano_letra="6"
+                    />
+                    {required && <span className="text-danger">*</span>}
+                </label>
+            )}
             <input
                 id={id}
                 name={name}
-                type="text"
+                type={type}
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
                 required={required}
                 disabled={disabled}
-                className="form-control"
-                aria-label={label}
+                className={`form-control ${sizeClass}`}
             />
         </div>
-    )
+    );
 }
