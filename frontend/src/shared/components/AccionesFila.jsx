@@ -1,27 +1,47 @@
 /**
  * Autor: Brayan Azofeifa
- * Grupo de botones (iconos) para colocar al final de las filas en las tablas.
- * Se le puede cambiar: las funciones de editar, eliminar, activar, y clases extra de alineación.
+ * 
+ * ACCIONES DE FILA
+ * 
+ * Descripción: Grupo estandarizado de botones de acción con iconos.
+ * Uso: Se coloca en la última columna de las tablas de datos para permitir 
+ * al usuario interactuar (editar, eliminar o activar) con un registro específico.
  */
 import Icon from './icon';
+import Button from './Button';
 
 export default function AccionesFila({ onEditar, onEliminar, onActivar, className = "" }) {
     return (
         <div className={`d-flex gap-2 ${className}`}>
             {onEditar && (
-                <button className="btn btn-sm btn-outline-primary" onClick={onEditar}>
+                <Button 
+                    className="btn-sm btn-outline-primary" 
+                    onClick={onEditar}
+                    title="Editar registro"
+                    aria-label="Editar"
+                >
                     <Icon name="editar" />
-                </button>
+                </Button>
             )}
             {onEliminar && (
-                <button className="btn btn-sm btn-outline-danger" onClick={onEliminar}>
+                <Button 
+                    className="btn-sm btn-outline-danger" 
+                    onClick={onEliminar}
+                    title="Eliminar registro"
+                    aria-label="Eliminar"
+                >
                     <Icon name="eliminar" />
-                </button>
+                </Button>
             )}
             {onActivar && (
-                <button className="btn btn-sm btn-outline-success" onClick={onActivar}>
+                <Button 
+                    className="btn-sm btn-outline-success" 
+                    onClick={onActivar}
+                    title="Activar registro"
+                    aria-label="Activar"
+                >
                     <Icon name="correcto" />
-                </button>
+                </Button>
             )}
         </div>
     );
