@@ -17,6 +17,8 @@ export const ICONOS = {
   clave: "bi-key",
   bloquear: "bi-lock",
   desbloquear: "bi-unlock",
+  ojoAbierto: "bi-eye",
+  ojoCerrado: "bi-eye-slash",
 
   // Marcas
   marcas: "bi-clock",
