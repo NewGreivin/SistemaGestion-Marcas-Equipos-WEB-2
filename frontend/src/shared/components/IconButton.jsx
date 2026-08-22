@@ -1,10 +1,10 @@
 //Autor: Ricardo Chaves
 
 import Button from "./Button";
-import Icon from "./icon";
+import Icon from "./Icon";
 import Texto from "./Texto"
 
-export default function IconButton({ icon, onClick, type = "button", variant = "primary", loading = false, disabled = false, className = "", label, ...props }) {
+export default function IconButton({ icon, onClick, type = "button", variant = "primary", loading = false, disabled = false, className = "", iconClassName = "", iconStyle = {}, label, ...props }) {
     return (
         <>
             <Button
@@ -16,7 +16,7 @@ export default function IconButton({ icon, onClick, type = "button", variant = "
                 className={className}
                 {...props}
             >
-                <Icon name={icon} />
+                <Icon name={icon} className={iconClassName} style={iconStyle}/>
                 {label && (
                     <Texto
                         texto={label}

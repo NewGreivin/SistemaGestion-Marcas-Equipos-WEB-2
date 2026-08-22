@@ -2,8 +2,8 @@
 
 import { ICONOS } from "../../themes/iconos";
 
-export default function Icon({ name, className = "" }) {
+export default function Icon({ name, className = "", style = {} }) {
   return (
-    <i className={`bi ${ICONOS[name]} ${className}`}></i>
+    <i className={`bi ${ICONOS[name]} ${className}`} style={style}></i>
   );
 }

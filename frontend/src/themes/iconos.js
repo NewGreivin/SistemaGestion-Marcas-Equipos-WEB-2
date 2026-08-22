@@ -25,6 +25,7 @@ export const ICONOS = {
   entrada: "bi-box-arrow-in-right",
   salida: "bi-box-arrow-right",
   historialMarcas: "bi-clock-history",
+  huella: "bi-fingerprint",
 
   // Dispositivos
   dispositivo: "bi-phone",
