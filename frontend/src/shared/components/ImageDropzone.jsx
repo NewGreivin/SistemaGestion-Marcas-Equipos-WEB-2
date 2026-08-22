@@ -5,8 +5,18 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Icon from './icon';
+import Texto from './Texto';
+import Image from './Image';
+import Button from './Button';
 
-export default function ImageDropzone({ onImageSelect, initialImage = null, label = "Imagen del equipo", className = '' }) {
+export default function ImageDropzone({ 
+    onImageSelect, 
+    initialImage = null, 
+    label = "Imagen del equipo", 
+    className = '',
+    error,
+    required = false
+}) {
     const [preview, setPreview] = useState(initialImage);
     const [isDragging, setIsDragging] = useState(false);
     const fileInputRef = useRef(null);
@@ -45,17 +55,14 @@ export default function ImageDropzone({ onImageSelect, initialImage = null, labe
     };
 
     const handleFileProcess = (file) => {
-        // Validar que sea imagen
         if (!file.type.startsWith('image/')) {
             alert('Por favor, selecciona un archivo de imagen válido.');
             return;
         }
 
-        // Crear vista previa
         const objectUrl = URL.createObjectURL(file);
         setPreview(objectUrl);
 
-        // Pasar archivo al padre
         if (onImageSelect) {
             onImageSelect(file);
         }
@@ -80,12 +87,23 @@ export default function ImageDropzone({ onImageSelect, initialImage = null, labe
         if (onImageSelect) onImageSelect(null);
     };
 
+    // Determinar las clases de estado para el borde y el fondo
+    const stateClasses = error 
+        ? 'border-danger bg-danger bg-opacity-10' 
+        : (isDragging ? 'border-primary bg-light' : 'border-secondary bg-light');
+
     return (
         <div className={`mb-3 ${className}`}>
-            {label && <label className="form-label d-block fw-bold">{label}</label>}
+            {label && (
+                <label className="form-label d-flex gap-1 mb-1 fw-bold">
+                    <Texto texto={label} tamano_letra="6" className="mb-0" />
+                    {required && <span className="text-danger">*</span>}
+                </label>
+            )}
+            
             <div
-                className={`border rounded text-center p-4 ${isDragging ? 'border-primary bg-light' : 'border-secondary'} border-2`}
-                style={{ borderStyle: 'dashed', cursor: 'pointer', minHeight: '150px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#f8f9fa' }}
+                className={`border rounded text-center p-4 border-2 d-flex flex-column align-items-center justify-content-center ${stateClasses}`}
+                style={{ borderStyle: 'dashed', cursor: 'pointer', minHeight: '150px' }}
                 onDragEnter={handleDragEnter}
                 onDragLeave={handleDragLeave}
                 onDragOver={handleDragOver}
@@ -97,34 +115,35 @@ export default function ImageDropzone({ onImageSelect, initialImage = null, labe
                     ref={fileInputRef}
                     onChange={handleInputChange}
                     accept="image/jpeg, image/png, image/gif, image/webp"
-                    style={{ display: 'none' }}
+                    className="d-none"
                 />
                 
                 {preview ? (
                     <div className="position-relative">
-                        <img 
-                            src={preview} 
+                        <Image 
+                            url={preview} 
                             alt="Vista previa" 
                             style={{ maxHeight: '150px', maxWidth: '100%', objectFit: 'contain' }} 
-                            className="rounded shadow-sm"
+                            classExtra="rounded shadow-sm"
                         />
-                        <button 
-                            type="button" 
-                            className="btn btn-sm btn-danger position-absolute top-0 end-0 translate-middle rounded-circle shadow"
+                        <Button 
+                            variant="danger" 
+                            className="position-absolute top-0 end-0 translate-middle rounded-circle shadow p-0"
                             onClick={handleRemove}
-                            style={{ width: '30px', height: '30px', padding: '0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                            style={{ width: '30px', height: '30px' }}
                             title="Quitar imagen"
                         >
                             <Icon name="error" />
-                        </button>
+                        </Button>
                     </div>
                 ) : (
                     <div className="text-muted">
                         <Icon name="subirImagen" className="mb-2 text-secondary fs-1" />
-                        <p className="mb-0">Arrastra una imagen aquí o haz clic para elegir</p>
+                        <Texto texto="Arrastra una imagen aquí o haz clic para elegir" tamano_letra="6" className="mb-0" />
                     </div>
                 )}
             </div>
+            {error && <div className="invalid-feedback d-block">{error}</div>}
         </div>
     );
 }
