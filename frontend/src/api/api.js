@@ -40,11 +40,10 @@ async function customFetch(endpoint, options = {}) {
                     localStorage.removeItem('gestion_usuario');
                 } catch (e) {
                     // Lo ignoramos
-                } finally {
-                    window.location.href = '/login'; 
                 }
-            }       
 
+                window.location.href = '/login';
+            }
 
             throw {
                 status: response.status,
@@ -75,3 +74,4 @@ const api = {
 };
 
 export default api;
+    
