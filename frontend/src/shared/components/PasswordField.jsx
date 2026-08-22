@@ -1,3 +1,5 @@
+//Autor: Greivin Eliecer A.G
+
 import { useState } from 'react';
 import Texto from './Texto';
 import Icon from './icon';
