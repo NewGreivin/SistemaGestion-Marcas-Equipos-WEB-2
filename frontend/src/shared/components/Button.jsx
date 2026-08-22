@@ -1,14 +1,44 @@
 /**
  * Autor: Marisol Alfaro
- * ============================================================
- * BOTÓN REUTILIZABLE
- * ============================================================
- * Componente visual reutilizable para mostrar botones del sistema.
+ * Descripción: Botón reutilizable para las diferentes pantallas del sistema.
+ * Uso: Permite ejecutar acciones, utilizar variantes de Bootstrap
+ * y mostrar estados de carga o deshabilitado.
  */
 
-const Button = ({ children, className = "" }) => {
+const Button = ({
+  children,
+  onClick,
+  type = "button",
+  variant = "primary",
+  loading = false,
+  disabled = false,
+  className = "",
+  ...props
+}) => {
+  const variants = {
+    primary: "btn-primary",
+    secondary: "btn-secondary",
+    danger: "btn-danger",
+    success: "btn-success",
+    warning: "btn-warning",
+    outline: "btn-outline-primary",
+  };
+
   return (
-    <button className={`btn btn-primary w-100 ${className}`}>
+    <button
+      type={type}
+      className={`btn ${variants[variant] || variants.primary} d-flex align-items-center justify-content-center gap-2 ${className}`}
+      onClick={onClick}
+      disabled={disabled || loading}
+      {...props}
+    >
+      {loading && (
+        <span
+          className="spinner-border spinner-border-sm"
+          aria-hidden="true"
+        />
+      )}
+
       {children}
     </button>
   );

@@ -1,28 +1,38 @@
 /**
  * Autor: Marisol Alfaro
- * ============================================================
- * ESTADO VACÍO
- * ============================================================
- * Componente visual reutilizable para mostrar un mensaje cuando
- * no existen registros o resultados disponibles.
+ * Descripción: Componente visual para mostrar estados sin resultados.
+ * Uso: Informa cuando una lista o tabla no contiene registros.
  */
 
 import Icon from "./icon";
+import Titulo from "./Titulo";
+import Texto from "./Texto";
 
 const EmptyState = ({
   title = "No hay resultados",
   message = "No se encontraron registros disponibles.",
   icon = "informacion",
   children,
-  className = "",
 }) => {
   return (
-    <div className={`text-center py-5 ${className}`}>
-      <Icon name={icon} className="fs-1 text-muted mb-3" />
+    <div className="text-center py-5">
+      <div className="fs-1 text-secondary mb-3">
+        <Icon name={icon} />
+      </div>
 
-      <h5 className="fw-semibold mb-2">{title}</h5>
+      <Titulo
+        tipografia="h5"
+        texto={title}
+        alineado="center"
+        color_text="black"
+      />
 
-      <p className="text-muted mb-3">{message}</p>
+      <Texto
+        texto={message}
+        alineado="center"
+        color_text="gray"
+        tamano_letra="6"
+      />
 
       {children}
     </div>

@@ -1,23 +1,30 @@
 /**
  * Autor: Marisol Alfaro
- * ============================================================
- * BARRA DE FILTROS
- * ============================================================
- * Componente visual reutilizable para agrupar la búsqueda y los
- * filtros utilizados en las diferentes pantallas del sistema.
+ * Descripción: Barra reutilizable para organizar filtros de búsqueda.
+ * Uso: Agrupa el buscador y filtros adicionales de las pantallas.
  */
 
 import SearchInput from "./SearchInput";
 
 const FiltrosBar = ({
   children,
+  search = "",
+  onSearchChange,
   placeholder = "Buscar...",
-  className = "",
+  id = "filtro-busqueda",
+  name = "filtroBusqueda",
 }) => {
   return (
-    <div className={`row g-3 align-items-end mb-3 ${className}`}>
+    <div className="row g-3 align-items-end mb-3">
       <div className="col-12 col-md-6">
-        <SearchInput placeholder={placeholder} className="mb-0" />
+        <SearchInput
+          id={id}
+          name={name}
+          value={search}
+          onChange={onSearchChange}
+          placeholder={placeholder}
+          className="mb-0"
+        />
       </div>
 
       {children}
