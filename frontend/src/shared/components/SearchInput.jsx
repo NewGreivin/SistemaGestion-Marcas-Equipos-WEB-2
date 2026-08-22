@@ -18,7 +18,7 @@ export default function SearchInput({
 
   return (
     <div className={`input-group mb-3 ${className}`}>
-      <span className="input-group-text bg-white" id={iconId}>
+      <span className="input-group-text bg-white" border-end-0 id={iconId}>
         <Icon name="buscar" className="text-muted" />
       </span>
 
@@ -26,11 +26,11 @@ export default function SearchInput({
         id={id}
         name={name}
         type="text"
-        className="form-control border-start-0 ps-0"
+        className="form-control border-start-0 ps-0 shadow-none"
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        aria-label="Buscar"
+        aria-label={placeholder}
         aria-describedby={iconId}
         {...props}
       />

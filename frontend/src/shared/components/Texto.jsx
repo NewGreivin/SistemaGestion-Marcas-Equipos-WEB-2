@@ -1,18 +1,19 @@
 //Autor: Greivin Eliecer A.G
 
 export default function Texto({ 
-    texto, 
-    alineado="center", 
-    color_text="white",
-    tamano_letra="16px"
- }) 
+    texto,
+    children,
+    className = '',     
+    alineado = "left",
+    color_text,
+    tamano_letra,
+}) {
 {
-
     const alineacion = {
         "left": "text-start",
         "center": "text-center",
         "right": "text-end"
-    }[alineado];
+    }[alineado] || "text-start";
 
     const fontSize = {
         "1": "fs-1",
@@ -21,12 +22,16 @@ export default function Texto({
         "4": "fs-4",
         "5": "fs-5",
         "6": "fs-6"
-    }[tamano_letra];
+    }[tamano_letra] || "fs-1";
 
+    const colorStyle = color_text ? { color: color_text } : {};
     return (
-
-        <p className={`${alineacion} ${fontSize}`} style={{color: color_text}}>
-            {texto}
-        </p>
-    )
+            <p 
+                className={`mb-0 ${alineacion} ${fontSize} ${className}`}
+                style={colorStyle}
+            >
+                {children ?? texto}
+            </p>
+        );
+    }
 }
