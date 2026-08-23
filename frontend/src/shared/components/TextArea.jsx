@@ -11,7 +11,8 @@ export default function TextArea({
     name, 
     disabled = false, 
     rows = 3,
-    className = ''
+    className = '',
+    error
 }) {
     return (
         <div className={`mb-3 ${className}`}>
@@ -36,7 +37,7 @@ export default function TextArea({
                 required={required} 
                 disabled={disabled} 
                 rows={rows}
-                className="form-control"
+                className={`form-control ${error ? 'is-invalid' : ''}`}
             />
         </div>
     );

@@ -40,33 +40,22 @@ export const useUsuariosScreen = () => {
     };
 
     const handleGuardarFormulario = async (formData) => {
-        try {
-            if (usuarioEditar) {
-                await actualizarUsuario(usuarioEditar.id, formData);
-            } else {
-                await crearUsuario(formData);
-            }
-            cerrarForm();
-            setAlerta({
-                ...ALERTA_INICIAL,
-                isOpen: true,
-                title: '¡Éxito!',
-                message: usuarioEditar
-                    ? 'Usuario actualizado correctamente.'
-                    : 'Usuario registrado correctamente.',
-                variant: 'success',
-            });
-        } catch (err) {
-            cerrarForm();
-            setAlerta({
-                ...ALERTA_INICIAL,
-                isOpen: true,
-                title: 'Error al guardar',
-                message:
-                    err.message || 'Ocurrió un problema al guardar los datos.',
-                variant: 'danger',
-            });
+        if (usuarioEditar) {
+            await actualizarUsuario(usuarioEditar.id, formData);
+        } else {
+            await crearUsuario(formData);
         }
+
+        cerrarForm();
+        setAlerta({
+            ...ALERTA_INICIAL,
+            isOpen: true,
+            title: '¡Éxito!',
+            message: usuarioEditar
+                ? 'Usuario actualizado correctamente.'
+                : 'Usuario registrado correctamente.',
+            variant: 'success',
+        });
     };
 
     const handleEliminar = (user) => {
@@ -93,9 +82,7 @@ export const useUsuariosScreen = () => {
                         ...ALERTA_INICIAL,
                         isOpen: true,
                         title: 'Error al eliminar',
-                        message:
-                            err.message ||
-                            'Hubo un problema al eliminar el usuario.',
+                        message: err.message || 'Error al procesar la solicitud.',
                         variant: 'danger',
                     });
                 }
@@ -107,8 +94,8 @@ export const useUsuariosScreen = () => {
         { key: 'nombre_completo', label: 'NOMBRE COMPLETO' },
         { key: 'correo', label: 'CORREO' },
         { key: 'username', label: 'USUARIO' },
-        { key: 'departamento_nombre', label: 'DEPARTAMENTO' }, 
-        { key: 'fecha_nacimiento_formato', label: 'NACIMIENTO' }, 
+        { key: 'departamento_nombre', label: 'DEPARTAMENTO' },
+        { key: 'fecha_nacimiento_formato', label: 'NACIMIENTO' },
         { key: 'rol_badge', label: 'ROL' },
     ];
 

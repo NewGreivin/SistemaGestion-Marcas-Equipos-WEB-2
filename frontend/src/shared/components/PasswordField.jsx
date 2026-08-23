@@ -16,6 +16,7 @@ export default function PasswordField({
   required,
   autoComplete = 'current-password',
   className = '',
+  error,
 }) {
   const [visible, setVisible] = useState(false);
 
@@ -44,7 +45,7 @@ export default function PasswordField({
           disabled={disabled}
           required={required}
           autoComplete={autoComplete}
-          className="form-control"
+          className={`form-control ${error ? 'is-invalid' : ''}`}
         />
 
         <Button
@@ -58,6 +59,12 @@ export default function PasswordField({
           <Icon name={visible ? 'ojoCerrado' : 'ojoAbierto'} />
         </Button>
       </div>
+      
+      {error && (
+        <div className="invalid-feedback d-block">
+          <Texto texto={error} alineado="left" color_text="var(--bs-danger)" tamano_letra="6" />
+        </div>
+      )}
     </div>
   );
 }

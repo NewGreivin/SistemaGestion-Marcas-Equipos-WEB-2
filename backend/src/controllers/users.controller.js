@@ -23,13 +23,13 @@ export const getAllUsers = async (req, res) => {
 
 export const createUser = async (req, res) => {
     try {
-        const insertId = await usuariosService.createUser(req.body);
-        return exito(res, 'Usuario creado exitosamente.', { id: insertId }, 201);
-    } catch (err) {
-        if (err.message.includes('registrado') || err.message.includes('coinciden')) {
-            return res.status(400).json({ success: false, message: err.message });
-        }
-        return error(res, 'Error al crear el usuario', err);
+        const nuevoUsuario = await usuariosService.createUser(req.body);
+        res.status(201).json({ message: "Usuario creado exitosamente", data: nuevoUsuario });
+    } catch (error) {
+        res.status(400).json({ 
+            status: "error", 
+            message: error.message 
+        });
     }
 };
 
@@ -42,13 +42,12 @@ export const updateProfile = async (req, res) => {
     }
 };
 
-export const deleteUser = async (req, res) => {
+export const deleteUser = async (req, res, next) => {
     try {
         await usuariosService.deleteUser(req.params.id);
         return exito(res, 'Usuario eliminado exitosamente.');
     } catch (err) {
-        if (err.message.includes('encontrado')) return error(res, 'Usuario no encontrado', err, 404);
-        return error(res, 'Error al eliminar usuario', err);
+        next(err);
     }
 };
 

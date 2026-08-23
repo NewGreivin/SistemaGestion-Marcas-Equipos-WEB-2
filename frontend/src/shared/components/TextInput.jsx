@@ -13,7 +13,8 @@ export default function TextInput({
     type = "text",
     size,
     className = "",
-    pattern
+    pattern,
+    error
 }) {
         const sizeClass = {
         "sm": "form-control-sm",
@@ -43,8 +44,13 @@ export default function TextInput({
                 required={required}
                 disabled={disabled}
                 pattern={pattern}
-                className={`form-control ${sizeClass}`}
+                className={`form-control ${sizeClass} ${error ? 'is-invalid' : ''}`}
             />
+            {error && (
+                <div id={`${id}-error`} className="invalid-feedback d-block">
+                    <Texto texto={error} alineado="left" color_text="var(--bs-danger)" tamano_letra="6" />
+                </div>
+            )}
         </div>
     );
 }

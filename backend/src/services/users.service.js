@@ -15,20 +15,22 @@ export const getAllUsers = async () => {
 };
 
 export const createUser = async (data) => {
-    const existente = await usuariosDao.findByCorreoOrUsername(data.correo);
-    const existenteUser = await usuariosDao.findByCorreoOrUsername(data.username);
-    
-    if (existente || existenteUser) {
-        throw new Error('El correo o nombre de usuario ya se encuentra registrado.');
+    const existeCorreo = await usuariosDao.findByCorreoOrUsername(data.correo); 
+    if (existeCorreo) {
+        throw new Error('El correo electrónico ya está registrado en el sistema.');
+    }
+
+    const existeUsername = await usuariosDao.findByCorreoOrUsername(data.username);
+    if (existeUsername) {
+        throw new Error('El nombre de usuario ya está en uso');
     }
 
     if (data.password !== data.confirmar_password) {
         throw new Error('Las contraseñas no coinciden.');
     }
 
-    const password_hash = await bcrypt.hash(data.password, 10);
-    const nuevoUsuario = { ...data, password_hash };
-    return await usuariosDao.create(nuevoUsuario);
+    const password_hash = await bcrypt.hash(data.password, 12);
+    return await usuariosDao.create({...data, password_hash});
 };
 
 export const updateProfile = async (usuario_id, data) => {
@@ -56,11 +58,14 @@ export const changePassword = async (usuario_id, passwordActual, nuevaPassword, 
 };
 
 export const updateUserById = async (id, data) => {
-    const existenteCorreo = await usuariosDao.findByCorreoOrUsername(data.correo);
-    const existenteUser = await usuariosDao.findByCorreoOrUsername(data.username);
-    
-    if ((existenteCorreo && existenteCorreo.id != id) || (existenteUser && existenteUser.id != id)) {
-        throw new Error('El correo o nombre de usuario ya se encuentra registrado por otro usuario.');
+    const existeCorreo = await usersDao.findByEmail(data.correo); 
+    if (existeCorreo && existeCorreo.id !== id) {
+        throw new Error('El correo electrónico ya está siendo usado por otro usuario.');
+    }
+
+    const existeUsername = await usersDao.findByUsername(data.username);
+    if (existeUsername && existeUsername.id !== id) {
+        throw new Error('El nombre de usuario ya está en uso por otro usuario.');
     }
 
     if (data.password) {

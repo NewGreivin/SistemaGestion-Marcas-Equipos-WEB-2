@@ -36,7 +36,7 @@ export default function DateInput({
                 type="date" 
                 id={id}
                 name={name}
-                className={`form-control ${error ? 'is-invalid' : ''}`} 
+                className={`form-control ${error ? 'is-invalid' : ''}`}
                 value={value} 
                 onChange={onChange} 
                 disabled={disabled}

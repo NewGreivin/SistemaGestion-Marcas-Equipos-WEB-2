@@ -5,6 +5,7 @@ import session from "express-session";
 import expressMySQLSession from "express-mysql-session";
 import pool from "./src/config/database.js";
 
+import globalErrorHandler from "./src/middlewares/errorHandler.middleware.js";
 import authRoutes from "./src/routes/auth.routes.js";
 import usuariosRoutes from "./src/routes/users.routes.js";
 import configRoutes from "./src/routes/config.routes.js";
@@ -63,6 +64,8 @@ app.use("/api/dispositivos", dispositivosRoutes);
 app.use("/api/departamentos", departamentoRoutes);
 app.use("/api/reportes", reporteRoutes);
 app.use("/api/marcas", marcasRoutes);
+
+app.use(globalErrorHandler);
 
 app.get("/", (req, res) => {
     res.json({

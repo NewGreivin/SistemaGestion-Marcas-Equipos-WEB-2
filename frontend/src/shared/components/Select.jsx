@@ -40,7 +40,7 @@ export default function Select({
                 required={required}
                 aria-describedby={error ? `${id}-error` : undefined}
             >
-                <option value="">Seleccione una opción</option>
+                <option value="" disabled hidden>Seleccione una opción</option>
                 {options.map((opt) => (
                     <option key={opt.value} value={opt.value}>
                         {opt.label}
