@@ -16,6 +16,13 @@ const useAuth = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+        const actualizarUsuario = (nuevosDatos) => {
+        const usuarioActual = usuario || {};
+        const usuarioActualizado = { ...usuarioActual, ...nuevosDatos };
+        localStorage.setItem('gestion_usuario', JSON.stringify(usuarioActualizado));
+        setUsuario(usuarioActualizado);
+    };
+
     const logout = async () => {
         try {
             setLoading(true);
@@ -37,6 +44,6 @@ const useAuth = () => {
             setLoading(false);
         }
     };
-    return { usuario, logout, loading, error };
+    return { usuario, logout, loading, error, actualizarUsuario };
 };
 export default useAuth;

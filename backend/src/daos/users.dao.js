@@ -44,10 +44,11 @@ export const create = async (usuario) => {
 };
 
 export const updateProfile = async (id, data) => {
-    await pool.query(
+    const [result] = await pool.query(
         'UPDATE usuarios SET nombre_completo = ?, fecha_nacimiento = ?, departamento_id = ? WHERE id = ?',
         [data.nombre_completo, data.fecha_nacimiento, data.departamento_id, id]
     );
+    return result.affectedRows === 0;
 };
 
 export const updatePassword = async (id, password_hash) => {

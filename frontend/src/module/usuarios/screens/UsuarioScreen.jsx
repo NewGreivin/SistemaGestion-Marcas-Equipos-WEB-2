@@ -65,7 +65,8 @@ export default function UsuariosScreen() {
                 <div>
                     <Texto
                         texto="GESTIÓN DE USUARIOS"
-                        className="text-success fw-bold mb-1"
+                        color_text="grey"
+                        className="fw-bold mb-1"
                         tamano_letra="6"
                     />
                     <Titulo

@@ -1,12 +1,14 @@
 // Autor: Greivin Eliecer A.G
 
 import { useState, useEffect } from 'react';
-import api from '../../../api/api';
+import departamentosService from '../../departamentos/services/departamentos.service';
+import { formatForSelect } from '../../../shared/utils/formatters';
 
 const formatearFechaParaInput = (fecha) => {
     if (!fecha) return '';
     if (fecha instanceof Date) return fecha.toISOString().split('T')[0];
-    if (typeof fecha === 'string' && fecha.includes('T')) return fecha.split('T')[0];
+    if (typeof fecha === 'string' && fecha.includes('T'))
+        return fecha.split('T')[0];
     if (typeof fecha === 'string' && fecha.includes('/')) {
         const [dia, mes, anio] = fecha.split('/');
         return `${anio}-${mes}-${dia}`;
@@ -44,10 +46,17 @@ export const useUsuarioForm = ({ isOpen, usuarioEditar, onGuardar }) => {
 
     useEffect(() => {
         if (isOpen) {
-            api.get('/departamentos')
-                .then((res) => {
-                    const lista = res.data.data || [];
-                    setDepartamentos(lista.map((d) => ({ value: String(d.id), label: d.nombre })));
+            setErrores({});
+
+            departamentosService
+                .getDepartamentos()
+                .then((listaPura) => {
+                    const opcionesFormateadas = formatForSelect(
+                        listaPura,
+                        'id',
+                        'nombre'
+                    );
+                    setDepartamentos(opcionesFormateadas);
                 })
                 .catch(() => setDepartamentos([]));
         }
@@ -65,8 +74,12 @@ export const useUsuarioForm = ({ isOpen, usuarioEditar, onGuardar }) => {
                     password: '',
                     confirmar_password: '',
                     rol_id: String(usuarioEditar.rol_id || '2'),
-                    departamento_id: String(usuarioEditar.departamento_id || ''),
-                    fecha_nacimiento: formatearFechaParaInput(usuarioEditar.fecha_nacimiento),
+                    departamento_id: String(
+                        usuarioEditar.departamento_id || ''
+                    ),
+                    fecha_nacimiento: formatearFechaParaInput(
+                        usuarioEditar.fecha_nacimiento
+                    ),
                 });
             } else {
                 setFormData(crearEstadoInicial());
@@ -85,13 +98,16 @@ export const useUsuarioForm = ({ isOpen, usuarioEditar, onGuardar }) => {
 
         const checarVacio = (valor, campo) => {
             if (!valor || !String(valor).trim()) {
-                nuevosErrores[campo] = true; 
-                return true; 
+                nuevosErrores[campo] = true;
+                return true;
             }
-            return false; 
+            return false;
         };
 
-        const nombreVacio = checarVacio(formData.nombre_completo, 'nombre_completo');
+        const nombreVacio = checarVacio(
+            formData.nombre_completo,
+            'nombre_completo'
+        );
         if (!nombreVacio && formData.nombre_completo.trim().length > 150)
             nuevosErrores.nombre_completo = 'Máximo 150 caracteres.';
 
@@ -114,17 +130,33 @@ export const useUsuarioForm = ({ isOpen, usuarioEditar, onGuardar }) => {
             const passVacio = checarVacio(formData.password, 'password');
             if (!passVacio) {
                 const reglas = esPasswordSegura(formData.password);
-                if (!reglas.minimo8) nuevosErrores.password = 'Mínimo 8 caracteres.';
-                else if (!reglas.tieneMayuscula) nuevosErrores.password = 'Debe tener al menos una mayúscula.';
-                else if (!reglas.tieneMinuscula) nuevosErrores.password = 'Debe tener al menos una minúscula.';
-                else if (!reglas.tieneNumero) nuevosErrores.password = 'Debe tener al menos un número.';
-                else if (!reglas.tieneEspecial) nuevosErrores.password = 'Debe tener al menos un carácter especial.';
+                if (!reglas.minimo8)
+                    nuevosErrores.password = 'Mínimo 8 caracteres.';
+                else if (!reglas.tieneMayuscula)
+                    nuevosErrores.password =
+                        'Debe tener al menos una mayúscula.';
+                else if (!reglas.tieneMinuscula)
+                    nuevosErrores.password =
+                        'Debe tener al menos una minúscula.';
+                else if (!reglas.tieneNumero)
+                    nuevosErrores.password = 'Debe tener al menos un número.';
+                else if (!reglas.tieneEspecial)
+                    nuevosErrores.password =
+                        'Debe tener al menos un carácter especial.';
             }
 
-            const confVacio = checarVacio(formData.confirmar_password, 'confirmar_password');
-            
-            if (!passVacio && !confVacio && formData.password !== formData.confirmar_password) {
-                nuevosErrores.confirmar_password = 'Las contraseñas no coinciden.';
+            const confVacio = checarVacio(
+                formData.confirmar_password,
+                'confirmar_password'
+            );
+
+            if (
+                !passVacio &&
+                !confVacio &&
+                formData.password !== formData.confirmar_password
+            ) {
+                nuevosErrores.confirmar_password =
+                    'Las contraseñas no coinciden.';
             }
         }
 
@@ -149,16 +181,26 @@ export const useUsuarioForm = ({ isOpen, usuarioEditar, onGuardar }) => {
             } else {
                 datosParaEnviar = { ...formData };
             }
-            
+
             await onGuardar(datosParaEnviar);
-            
         } catch (error) {
-            setErrorBackend(error.message || 'Error inesperado en el servidor.');
+            setErrorBackend(
+                error.message || 'Error inesperado en el servidor.'
+            );
             setTimeout(() => setErrorBackend(''), 4000);
         } finally {
             setCargando(false);
         }
     };
 
-    return { formData, errores, errorBackend, cargando, esEdicion, departamentos, handleChange, handleSubmit };
+    return {
+        formData,
+        errores,
+        errorBackend,
+        cargando,
+        esEdicion,
+        departamentos,
+        handleChange,
+        handleSubmit,
+    };
 };

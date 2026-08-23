@@ -9,6 +9,7 @@ import Usuarios from "../module/usuarios/screens/UsuarioScreen";
 import NuevoPrestamoScreen from '../module/prestamos/screens/NuevoPrestamoScreen';
 import DevolucionScreen from '../module/prestamos/screens/DevolucionScreen';
 import HistorialPrestamosScreen from '../module/prestamos/screens/HistorialPrestamosScreen';
+import Perfil from '../module/perfil/screens/PerfilScreen';
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/prestamos/nuevo" element={<NuevoPrestamoScreen />}/>
                 <Route path="/prestamos/devolucion" element={<DevolucionScreen />}/>
                 <Route path="/prestamos/historial" element={<HistorialPrestamosScreen />}/>
+                <Route path="/perfil" element={<Perfil />} />
             </Route>
         </Routes>
     );

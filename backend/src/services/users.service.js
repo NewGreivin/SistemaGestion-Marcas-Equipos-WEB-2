@@ -58,14 +58,14 @@ export const changePassword = async (usuario_id, passwordActual, nuevaPassword, 
 };
 
 export const updateUserById = async (id, data) => {
-    const existeCorreo = await usersDao.findByEmail(data.correo); 
-    if (existeCorreo && existeCorreo.id !== id) {
-        throw new Error('El correo electrónico ya está siendo usado por otro usuario.');
+    const existeCorreo = await usuariosDao.findByCorreoOrUsername(data.correo); 
+    if (existeCorreo && existeCorreo.id !== Number(id)) {
+        throw new Error('El correo electrónico ya está registrado en el sistema.');
     }
 
-    const existeUsername = await usersDao.findByUsername(data.username);
-    if (existeUsername && existeUsername.id !== id) {
-        throw new Error('El nombre de usuario ya está en uso por otro usuario.');
+    const existeUsername = await usuariosDao.findByCorreoOrUsername(data.username);
+    if (existeUsername && existeUsername.id !== Number(id)) {
+        throw new Error('El nombre de usuario ya está en uso');
     }
 
     if (data.password) {
