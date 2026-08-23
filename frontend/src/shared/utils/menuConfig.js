@@ -26,12 +26,12 @@ export const sidebarMenuConfig = [
     expanded: false,
     subItems: [
       {
-        path: "/marcas/registrar",
+        path: "/marcas",
         label: "Registrar marca",
         isBullet: true
       },
       {
-        path: "/marcas/dispositivos",
+        path: "/dispositivos",
         label: "Ver dispositivos",
         isBullet: true
       },
