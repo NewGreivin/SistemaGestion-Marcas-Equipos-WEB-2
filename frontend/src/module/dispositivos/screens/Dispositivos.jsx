@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import Titulo from "../../../shared/components/Titulo";
 import Texto from "../../../shared/components/Texto";
 import Card from "../../../shared/components/Card";
@@ -9,32 +7,20 @@ import Button from "../../../shared/components/Button";
 import Icon from "../../../shared/components/Icon";
 import DataTable from "../../../shared/components/DataTable";
 
+import useDispositivos from "../hooks/useDispositivos";
+
 export default function Dispositivos({ }) {
 
-    const [nombre, setNombre] = useState("");
-    const [descripcion, setDescripcion] = useState("");
-    const [loading, setLoading] = useState(false);
-
-    //Cambiar DISPOSITIVOS al integrar API
-
-    const dispositivos = [
-        {
-            id: 1,
-            estado: "Activo",
-            nombre: "Laptop Acer",
-            descripcion: "Acer Aspire 5",
-            fecha_registro: "26-10-2008",
-            identificador: "504740049"
-        },
-        {
-            id: 2,
-            estado: "Inactivo",
-            nombre: "iPhone",
-            descripcion: "iPhone 15",
-            fecha_registro: "26-10-2007",
-            identificador: "502640122"
-        }
-    ];
+    const {
+        dispositivos,
+        nombre,
+        descripcion,
+        setNombre,
+        setDescripcion,
+        loading,
+        error,
+        crearDispositivo
+    } = useDispositivos();
 
     const columns = [
         {
@@ -114,17 +100,31 @@ export default function Dispositivos({ }) {
 
                                 <Button
                                     type="submit"
+                                    onClick={crearDispositivo}
+                                    disabled={loading}
                                     variant="primary"
                                     loading={loading}
                                     className="w-100"
                                 >
                                     <Icon name="agregar" />
-                                    Agregar Dispositivo
+
+                                    {loading
+                                        ? "Guardar..."
+                                        : "Registrar Dispositivo"
+                                    }
+
                                 </Button>
 
                             </div>
 
                         </Card>
+
+                        {error && (
+                            <Texto
+                                texto={error}
+                                color_text="danger"
+                            />
+                        )}
 
                     </div>
 
