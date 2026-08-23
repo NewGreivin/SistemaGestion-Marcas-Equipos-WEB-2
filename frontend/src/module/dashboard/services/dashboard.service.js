@@ -1,37 +1,64 @@
 // Autor: Greivin Eliecer A.G
-
-//import api from '../../../api/api';
+import api from '../../../api/api'; 
 
 export const getDashboardStatsService = async () => {
-    // Si tienes un endpoint para esto, sería algo como:
-    // return await api.get('/dashboard/stats');
-    
-    // Por ahora retornamos datos simulados basados en la imagen
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve({
-                data: {
-                    usuarios: {
-                        total: 125,
-                        label: 'Usuarios'
-                    },
-                    equipos: {
-                        disponibles: 88,
-                        totales: 112,
-                        label: 'Equipos Totales'
-                    },
-                    prestamos: {
-                        activos: 24,
-                        label: 'Préstamos'
-                    },
-                    marcas: {
-                        hoy: 42,
-                        entradas: 42, // asumiendo que 42 son entradas según el texto '42 Entradas / 38 Salidas' o tal vez total sea 80, lo adaptamos
-                        salidas: 38,
-                        label: 'Entradas / 38 Salidas'
-                    }
+    try {
+        const hoy = new Date();
+        const anio = hoy.getFullYear();
+        const mes = hoy.getMonth() + 1; 
+        const dia = hoy.getDate();
+
+        const [
+            usuariosRes, 
+            equiposRes, 
+            prestamosRes, 
+            marcasRes
+        ] = await Promise.all([
+            api.get('/usuarios'),
+            api.get('/equipos'),
+            api.get('/prestamos'),
+            api.get(`/reportes/marcas?anio=${anio}&mes=${mes}&dia=${dia}`)
+        ]);
+
+        const usuarios = usuariosRes.data.data || [];
+        const equipos = equiposRes.data.data || [];
+        const prestamos = prestamosRes.data.data || [];
+        const marcasDeHoy = marcasRes.data.data || [];
+
+        const totalUsuarios = usuarios.length;
+
+        const totalEquipos = equipos.length;
+        const equiposDisponibles = equipos.filter(e => e.estado === 'DISPONIBLE').length;
+
+        const prestamosActivos = prestamos.filter(p => p.estado === 'ACTIVO').length;
+        
+        const entradasHoy = marcasDeHoy.filter(m => m.tipo_marca === 'ENTRADA').length;
+        const salidasHoy = marcasDeHoy.filter(m => m.tipo_marca === 'SALIDA').length;
+
+        return {
+            data: {
+                usuarios: {
+                    total: totalUsuarios,
+                    label: 'Usuarios Registrados'
+                },
+                equipos: {
+                    disponibles: equiposDisponibles,
+                    totales: totalEquipos,
+                    label: 'Equipos Totales'
+                },
+                prestamos: {
+                    activos: prestamosActivos,
+                    label: 'Préstamos en curso'
+                },
+                marcas: {
+                    hoy: marcasDeHoy.length,
+                    entradas: entradasHoy,
+                    salidas: salidasHoy,
+                    label: 'Entradas / Salidas'
                 }
-            });
-        }, 800);
-    });
+            }
+        };
+    } catch (error) {
+        throw new Error('Error al cargar la información del servidor', { cause: error });
+    }
 };
