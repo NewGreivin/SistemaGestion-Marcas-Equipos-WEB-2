@@ -42,7 +42,7 @@ async function customFetch(endpoint, options = {}) {
                     // Lo ignoramos
                 }
 
-                window.location.href = '/login';
+                //window.location.href = '/login';
             }
 
             throw {
