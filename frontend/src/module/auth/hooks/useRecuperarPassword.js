@@ -20,9 +20,7 @@ export const useRecuperarPassword = () => {
         setSuccessMessage(null);
         try {
             const { data } = await api.post('/auth/recover-password', { identificador });
-            console.log('Recovery response:', data);
             
-            // Usamos el mensaje del backend o uno genérico
             setSuccessMessage(data?.message || 'Si el usuario existe, se ha enviado un token.');
         } catch (err) {
             setError(err.message || 'Error al procesar recuperación');
