@@ -1,8 +1,21 @@
 // Autor: Ricardo Chaves
 import Texto from "./Texto";
 
-export default function TextInput({ id, label, placeholder, value, onChange, required = false, name, disabled = false, type = "text", size, className = ""}) {
-    const sizeClass = {
+export default function TextInput({
+    id,
+    label,
+    placeholder,
+    value,
+    onChange,
+    required = false,
+    name,
+    disabled = false,
+    type = "text",
+    size,
+    className = "",
+    pattern
+}) {
+        const sizeClass = {
         "sm": "form-control-sm",
         "lg": "form-control-lg"
     }[size] || "";
@@ -29,6 +42,7 @@ export default function TextInput({ id, label, placeholder, value, onChange, req
                 onChange={onChange}
                 required={required}
                 disabled={disabled}
+                pattern={pattern}
                 className={`form-control ${sizeClass}`}
             />
         </div>
