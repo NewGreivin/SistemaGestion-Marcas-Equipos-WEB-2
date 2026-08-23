@@ -5,7 +5,14 @@ import RecuperarPassword from '../module/auth/screens/RecuperarPasswordScreen';
 import Dashboard from '../module/dashboard/screens/DashboardScreen';
 import Dispositivo from '../module/dispositivos/screens/Dispositivos';
 import Marcas from "../module/marcas/screens/Marcas";
+<<<<<<< HEAD
 import Usuarios from "../module/usuarios/screens/UsuarioScreen";
+=======
+import MainLayout from '../shared/layout/MainLayout';
+import NuevoPrestamoScreen from '../module/prestamos/screens/NuevoPrestamoScreen';
+import DevolucionScreen from '../module/prestamos/screens/DevolucionScreen';
+import HistorialPrestamosScreen from '../module/prestamos/screens/HistorialPrestamosScreen';
+>>>>>>> origin/cambiosMarisol
 
 function App() {
     return (
@@ -17,7 +24,13 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/dispositivos" element={<Dispositivo />} />
                 <Route path="/marcas" element={<Marcas />} />
+<<<<<<< HEAD
                 <Route path="/usuarios" element={<Usuarios />} />
+=======
+                <Route path="/prestamos/nuevo" element={<NuevoPrestamoScreen />}/>
+                <Route path="/prestamos/devolucion" element={<DevolucionScreen />}/>
+                <Route path="/prestamos/historial" element={<HistorialPrestamosScreen />}/>
+>>>>>>> origin/cambiosMarisol
             </Route>
         </Routes>
     );
