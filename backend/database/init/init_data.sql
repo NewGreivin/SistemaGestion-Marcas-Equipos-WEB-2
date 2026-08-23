@@ -25,8 +25,8 @@ INSERT INTO configuracion (nombre_institucion, rango_ip_permitido, tiempo_maximo
 -- La contraseña es: root123
 -- ==========================================
 INSERT INTO usuarios (nombre_completo, fecha_nacimiento, correo, username, password_hash, departamento_id, rol_id) VALUES 
-('Greivin Arguedas Admin', '2000-01-15', 'admin@utn.ac.cr', 'admin', '$2b$10$yDIzOKjlvkaJQ9EECM48HOtim62myaLdhbJwglGXuXC4LhCZwa9HG', 1, 1),
-('Juan Perez Usuario',     '1998-05-20', 'juan@utn.ac.cr',  'jperez', '$2b$10$yDIzOKjlvkaJQ9EECM48HOtim62myaLdhbJwglGXuXC4LhCZwa9HG', 1, 2);
+('Greivin Arguedas Admin', '2000-01-15', 'admin@utn.ac.cr', 'admin', '$2a$12$FC21hbfGMW5DsdtQMDomSeDVV47TrHxshF7/dYuHr3bgcumDkeEtW', 1, 1),
+('Juan Perez Usuario',     '1998-05-20', 'juan@utn.ac.cr',  'jperez', '$2a$12$FC21hbfGMW5DsdtQMDomSeDVV47TrHxshF7/dYuHr3bgcumDkeEtW', 1, 2);
 
 -- ==========================================
 -- TOKENS DE RECUPERACIÓN (Prueba)
