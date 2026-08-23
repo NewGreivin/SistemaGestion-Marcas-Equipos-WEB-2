@@ -60,6 +60,12 @@ export default function ImageDropzone({
             return;
         }
 
+        const maxSize = 5 * 1024 * 1024; // 5 MB
+        if (file.size > maxSize) {
+            alert('La imagen es muy pesada. El tamaño máximo permitido es de 5 MB.');
+            return;
+        }
+
         const objectUrl = URL.createObjectURL(file);
         setPreview(objectUrl);
 

@@ -3,6 +3,7 @@ import MainLayout from '../shared/layout/MainLayout';
 import Login from '../module/auth/screens/LoginScreen';
 import RecuperarPassword from '../module/auth/screens/RecuperarPasswordScreen';
 import Dashboard from '../module/dashboard/screens/DashboardScreen';
+import EquiposScreen from '../module/equipos/screens/EquiposScreen';
 import Dispositivo from '../module/dispositivos/screens/Dispositivos';
 import Marcas from "../module/marcas/screens/Marcas";
 import Usuarios from "../module/usuarios/screens/UsuarioScreen";
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/prestamos/devolucion" element={<DevolucionScreen />}/>
                 <Route path="/prestamos/historial" element={<HistorialPrestamosScreen />}/>
                 <Route path="/perfil" element={<Perfil />} />
+                <Route path="/prestamos/equipos" element={<EquiposScreen />} />
             </Route>
         </Routes>
     );
