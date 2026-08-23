@@ -92,8 +92,8 @@ export const create = async (marca) => {
         VALUES (
             ?,
             ?,
-            CURRENT_DATE(),
-            CURRENT_TIME(),
+            DATE(CONVERT_TZ(NOW(), '+00:00', '-06:00')),
+            TIME(CONVERT_TZ(NOW(), '+00:00', '-06:00')),
             ?,
             ?
         )`,

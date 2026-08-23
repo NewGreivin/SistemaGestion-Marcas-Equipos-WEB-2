@@ -32,6 +32,12 @@ export const createMarca = async (req, res) => {
 
         const direccion_ip = req.ip;
 
+        if (!dispositivo_id) {
+            throw new Error(
+                "Debe seleccionar un dispositivo"
+            );
+        }
+
         const marca =
             await marcasService.createMarca(
                 usuario_id,
