@@ -8,7 +8,6 @@ export default function Texto({
     color_text,
     tamano_letra,
 }) {
-{
     const alineacion = {
         "left": "text-start",
         "center": "text-center",
@@ -22,16 +21,15 @@ export default function Texto({
         "4": "fs-4",
         "5": "fs-5",
         "6": "fs-6"
-    }[tamano_letra] || "fs-1";
+    }[tamano_letra] || "";
 
-    const colorStyle = color_text ? { color: color_text } : {};
+    const colorClass = color_text ? `text-${color_text}` : "";
+
     return (
-            <p 
-                className={`mb-0 ${alineacion} ${fontSize} ${className}`}
-                style={colorStyle}
-            >
-                {children ?? texto}
-            </p>
-        );
-    }
+        <p 
+            className={`mb-0 ${alineacion} ${fontSize} ${colorClass} ${className}`}
+        >
+            {children ?? texto}
+        </p>
+    );
 }
