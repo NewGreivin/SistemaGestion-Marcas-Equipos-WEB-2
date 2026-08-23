@@ -54,3 +54,18 @@ export const changePassword = async (usuario_id, passwordActual, nuevaPassword, 
     const password_hash = await bcrypt.hash(nuevaPassword, 10);
     await usuariosDao.updatePassword(usuario_id, password_hash);
 };
+
+export const updateUserById = async (id, data) => {
+    const existenteCorreo = await usuariosDao.findByCorreoOrUsername(data.correo);
+    const existenteUser = await usuariosDao.findByCorreoOrUsername(data.username);
+    
+    if ((existenteCorreo && existenteCorreo.id != id) || (existenteUser && existenteUser.id != id)) {
+        throw new Error('El correo o nombre de usuario ya se encuentra registrado por otro usuario.');
+    }
+
+    if (data.password) {
+        data.password_hash = await bcrypt.hash(data.password, 10);
+    }
+
+    await usuariosDao.updateUserById(id, data);
+};

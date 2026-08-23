@@ -24,7 +24,7 @@ export const getAllUsers = async (req, res) => {
 export const createUser = async (req, res) => {
     try {
         const insertId = await usuariosService.createUser(req.body);
-        return exito(res, 'Usuario creado exitosamente por el administrador.', { id: insertId }, 201);
+        return exito(res, 'Usuario creado exitosamente.', { id: insertId }, 201);
     } catch (err) {
         if (err.message.includes('registrado') || err.message.includes('coinciden')) {
             return res.status(400).json({ success: false, message: err.message });
@@ -47,8 +47,7 @@ export const deleteUser = async (req, res) => {
         await usuariosService.deleteUser(req.params.id);
         return exito(res, 'Usuario eliminado exitosamente.');
     } catch (err) {
-        if (err.message.includes('encontrado')) return 
-            error(res, 'Usuario no encontrado', err, 404);
+        if (err.message.includes('encontrado')) return error(res, 'Usuario no encontrado', err, 404);
         return error(res, 'Error al eliminar usuario', err);
     }
 };
@@ -60,5 +59,17 @@ export const changePassword = async (req, res) => {
         return exito(res, 'Contraseña actualizada exitosamente.');
     } catch (err) {
         return error(res, 'Error al actualizar la contraseña', err);
+    }
+};
+
+export const updateUserById = async (req, res) => {
+    try {
+        await usuariosService.updateUserById(req.params.id, req.body);
+        return exito(res, 'Usuario actualizado exitosamente.');
+    } catch (err) {
+        if (err.message.includes('registrado')) {
+            return res.status(400).json({ success: false, message: err.message });
+        }
+        return error(res, 'Error al actualizar usuario', err);
     }
 };
