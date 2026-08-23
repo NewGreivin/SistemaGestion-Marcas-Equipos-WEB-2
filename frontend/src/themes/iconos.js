@@ -1,9 +1,12 @@
+//Autor: Greivin Eliecer A.G
+
 export const ICONOS = {
   // Navegación
   inicio: "bi-house",
   dashboard: "bi-speedometer2",
   menu: "bi-list",
   configuracion: "bi-gear",
+  flechaAbajo: "arrow-down",
 
   // Usuarios
   usuario: "bi-person",
