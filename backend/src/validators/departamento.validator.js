@@ -1,15 +1,13 @@
 // Autor: Brayan Azofeifa
-// Descripcion: Validaciones para los datos de entrada
-// en las rutas del CRUD de departamentos.
-
+// Descripcion: Validaciones para los datos de entrada en las rutas del CRUD de departamentos.
 
 import { body, param } from 'express-validator';
 import { handleValidationErrors } from '../middlewares/validate.middleware.js';
 
 export const validateCreateDepartamento = [
     body('nombre').notEmpty().withMessage('El nombre es requerido').isLength({ max: 100 }),
-    body('descripcion').optional().isString(),
-    body('encargado').optional().isLength({ max: 100 }),
+    body('descripcion').notEmpty().withMessage('La descripción es requerida').isString(),
+    body('encargado').notEmpty().withMessage('El encargado es requerido').isLength({ max: 100 }),
     handleValidationErrors
 ];
 
