@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import departamentosService from '../../departamentos/services/departamentos.service';
+import { getRoles } from '../services/usuarios.service';
 import { formatForSelect } from '../../../shared/utils/formatters';
 
 const formatearFechaParaInput = (fecha) => {
@@ -40,6 +41,7 @@ export const useUsuarioForm = ({ isOpen, usuarioEditar, onGuardar }) => {
     const [errores, setErrores] = useState({});
     const [cargando, setCargando] = useState(false);
     const [departamentos, setDepartamentos] = useState([]);
+    const [roles, setRoles] = useState([]);
     const [errorBackend, setErrorBackend] = useState('');
 
     const esEdicion = Boolean(usuarioEditar);
@@ -48,16 +50,12 @@ export const useUsuarioForm = ({ isOpen, usuarioEditar, onGuardar }) => {
         if (isOpen) {
             setErrores({});
 
-            departamentosService
-                .getDepartamentos()
-                .then((listaPura) => {
-                    const opcionesFormateadas = formatForSelect(
-                        listaPura,
-                        'id',
-                        'nombre'
-                    );
-                    setDepartamentos(opcionesFormateadas);
-                })
+            getRoles()
+                .then((lista) => setRoles(lista.map(r => ({ value: String(r.id), label: r.nombre }))))
+                .catch(() => setRoles([]));
+
+            departamentosService.getDepartamentos()
+                .then((listaPura) => setDepartamentos(formatForSelect(listaPura, 'id', 'nombre')))
                 .catch(() => setDepartamentos([]));
         }
     }, [isOpen]);
@@ -65,6 +63,7 @@ export const useUsuarioForm = ({ isOpen, usuarioEditar, onGuardar }) => {
     useEffect(() => {
         if (isOpen) {
             setErrores({});
+
             if (usuarioEditar) {
                 setFormData({
                     ...crearEstadoInicial(),
@@ -200,6 +199,7 @@ export const useUsuarioForm = ({ isOpen, usuarioEditar, onGuardar }) => {
         cargando,
         esEdicion,
         departamentos,
+        roles,
         handleChange,
         handleSubmit,
     };

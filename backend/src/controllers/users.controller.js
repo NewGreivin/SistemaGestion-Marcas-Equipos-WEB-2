@@ -72,3 +72,12 @@ export const updateUserById = async (req, res) => {
         return error(res, 'Error al actualizar usuario', err);
     }
 };
+
+export const getRoles = async (req, res) => {
+    try {
+        const roles = await usuariosService.getRoles();
+        return exito(res, 'Roles obtenidos.', roles);
+    } catch (err) {
+        return error(res, 'Error al obtener roles', err);
+    }
+};

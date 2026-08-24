@@ -43,8 +43,8 @@ export default function UsuariosScreen() {
             fecha_nacimiento_formato: fechaFormateada,
             rol_badge: (
                 <Badge
-                    label={user.rol_id === 1 ? 'Administrador' : 'Usuario'}
-                    variant={user.rol_id === 1 ? 'primary' : 'secondary'}
+                    label={user.rol_nombre || 'Desconocido'} 
+                    variant={user.rol_nombre === 'Administrador' ? 'primary' : 'success'}
                     pill={true}
                 />
             ),

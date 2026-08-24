@@ -21,11 +21,13 @@ export const findById = async (id) => {
 };
 
 export const findAll = async () => {
-    const [rows] = await await pool.query(
+    const [rows] = await pool.query(
         `SELECT u.id, u.nombre_completo, u.fecha_nacimiento, u.correo, 
-                u.username, u.departamento_id, d.nombre AS departamento_nombre, u.rol_id
+                u.username, u.departamento_id, d.nombre AS departamento_nombre, 
+                u.rol_id, r.nombre AS rol_nombre
         FROM usuarios u
-        JOIN departamentos d ON u.departamento_id = d.id`
+        JOIN departamentos d ON u.departamento_id = d.id
+        JOIN roles r ON u.rol_id = r.id`
     );
     return rows;
 };
@@ -33,6 +35,11 @@ export const findAll = async () => {
 export const findRolByName = async (nombre) => {
     const [rows] = await pool.query('SELECT id FROM roles WHERE nombre = ? LIMIT 1', [nombre]);
     return rows.length > 0 ? rows[0].id : null;
+};
+
+export const findAllRoles = async () => {
+    const [rows] = await pool.query('SELECT id, nombre FROM roles');
+    return rows;
 };
 
 export const create = async (usuario) => {
