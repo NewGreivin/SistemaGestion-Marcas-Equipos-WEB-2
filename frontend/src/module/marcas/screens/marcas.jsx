@@ -1,35 +1,29 @@
-import { useState } from "react";
-
 import Titulo from "../../../shared/components/Titulo";
 import Texto from "../../../shared/components/Texto";
 import Card from "../../../shared/components/Card";
 import IconButton from "../../../shared/components/IconButton";
 import Badge from "../../../shared/components/Badge";
+import Select from "../../../shared/components/Select";
+
+import useMarcas from "../hooks/useMarcas";
+import { formatForSelect } from "../../../shared/utils/formatters";
 
 export default function Dispositivos({ }) {
 
-    //Remover al utilizar API
+    const {
+        ultimaMarca,
+        dispositivos,
+        dispositivoSeleccionado,
+        setDispositivoSeleccionado,
+        loading,
+        marcar
+    } = useMarcas();
 
-    const [loading, setLoading] = useState(false);
-    const [ultimaMarca, setUltimaMarca] = useState(null);
-
-    const registrarMarca = () => {
-
-        setLoading(true);
-
-        const tipo = ultimaMarca?.tipo === "ENTRADA"
-            ? "SALIDA"
-            : "ENTRADA";
-
-        const fecha = new Date();
-
-        setUltimaMarca({
-            tipo,
-            fecha
-        });
-
-        setLoading(false);
-    };
+    const dispositivosOptions = formatForSelect(
+        dispositivos,
+        "id",
+        "nombre"
+    );
 
     return (
         <>
@@ -61,6 +55,19 @@ export default function Dispositivos({ }) {
                             texto_alineado="left"
                         >
 
+                            <Select
+                                id="dispositivo"
+                                name="dispositivo"
+                                label="Dispositivo"
+                                options={dispositivosOptions}
+                                value={dispositivoSeleccionado}
+                                onChange={(e) =>
+                                    setDispositivoSeleccionado(e.target.value)
+                                }
+                                disabled={loading}
+                                required={true}
+                            />
+
                             <div className="d-flex flex-column align-items-center">
 
                                 <IconButton
@@ -68,7 +75,7 @@ export default function Dispositivos({ }) {
                                     type="button"
                                     loading={loading}
                                     variant="success"
-                                    onClick={registrarMarca}
+                                    onClick={marcar}
                                     className="rounded-circle d-flex flex-column align-items-center justify-content-center p-3"
                                     label="Marcar Ahora"
                                     iconStyle={{ fontSize: "60px" }}
@@ -82,9 +89,9 @@ export default function Dispositivos({ }) {
                                     <div className="text-center mt-3">
 
                                         <Badge
-                                            label={ultimaMarca.tipo}
+                                            label={ultimaMarca.tipo_marca}
                                             variant={
-                                                ultimaMarca.tipo === "ENTRADA"
+                                                ultimaMarca.tipo_marca === "ENTRADA"
                                                     ? "success"
                                                     : "danger"
                                             }
@@ -93,7 +100,7 @@ export default function Dispositivos({ }) {
 
                                         <div className="mt-2">
                                             <Texto
-                                                texto={ultimaMarca.fecha.toLocaleString("es-CR")}
+                                                texto={`${new Date(ultimaMarca.fecha).toLocaleDateString("es-CR")} - ${ultimaMarca.hora}`}
                                                 alineado="center"
                                                 color_text="black"
                                                 tamano_letra="6"
