@@ -30,7 +30,8 @@ app.use(cors({
 
 app.use(express.json());
 
-// Configuración de almacenamiento de sesiones en MySQL
+app.use(express.static("public"));
+
 const MySQLStore = expressMySQLSession(session);
 const sessionStore = new MySQLStore({
     clearExpired: true,
@@ -40,13 +41,13 @@ const sessionStore = new MySQLStore({
 
 app.use(session({
     key: 'gestion_session',
-    secret: process.env.SESSION_SECRET || 'super_secret_key_123',
+    secret: process.env.SESSION_SECRET,
     store: sessionStore,
     resave: false,
     saveUninitialized: false,
     cookie: {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: process.env.NODE_ENV === 'production', 
         sameSite: 'strict',
         maxAge: 86400000
     }
@@ -59,7 +60,6 @@ app.use("/api/prestamos", prestamoRoutes);
 app.use("/api/devoluciones", devolucionRoutes);
 app.use("/api/historial", historialRoutes);
 app.use("/api/equipos", equiposRoutes);
-app.use(express.static("public"));
 app.use("/api/dispositivos", dispositivosRoutes);
 app.use("/api/departamentos", departamentoRoutes);
 app.use("/api/reportes", reporteRoutes);
