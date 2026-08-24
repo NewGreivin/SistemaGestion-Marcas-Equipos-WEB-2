@@ -1,64 +1,40 @@
 // Autor: Greivin Eliecer A.G
 import api from '../../../api/api'; 
 
-export const getDashboardStatsService = async () => {
-    try {
-        const hoy = new Date();
-        const anio = hoy.getFullYear();
-        const mes = hoy.getMonth() + 1; 
-        const dia = hoy.getDate();
+export const getAdminDashboardData = async (anio, mes, dia) => {
+    const t = new Date().getTime();
+    
+    const [usuariosRes, equiposRes, prestamosRes, marcasRes, dispositivosRes, ultimaMarcaRes] = await Promise.all([
+        api.get(`/usuarios?_t=${t}`),
+        api.get(`/equipos?_t=${t}`),
+        api.get(`/prestamos?_t=${t}`),
+        api.get(`/reportes/marcas?anio=${anio}&mes=${mes}&dia=${dia}&_t=${t}`),
+        api.get(`/dispositivos?_t=${t}`).catch(() => ({ data: { data: [] } })),
+        api.get(`/marcas/ultima?_t=${t}`).catch(() => ({ data: { data: null } }))
+    ]);
 
-        const [
-            usuariosRes, 
-            equiposRes, 
-            prestamosRes, 
-            marcasRes
-        ] = await Promise.all([
-            api.get('/usuarios'),
-            api.get('/equipos'),
-            api.get('/prestamos'),
-            api.get(`/reportes/marcas?anio=${anio}&mes=${mes}&dia=${dia}`)
-        ]);
+    return {
+        usuarios: usuariosRes.data?.data || [],
+        equipos: equiposRes.data?.data || [],
+        prestamos: prestamosRes.data?.data || [],
+        marcas: marcasRes.data?.data || [],
+        dispositivos: dispositivosRes.data?.data || [],
+        ultimaMarca: ultimaMarcaRes.data?.data || null,
+    };
+};
 
-        const usuarios = usuariosRes.data.data || [];
-        const equipos = equiposRes.data.data || [];
-        const prestamos = prestamosRes.data.data || [];
-        const marcasDeHoy = marcasRes.data.data || [];
+export const getUserDashboardData = async () => {
+    const t = new Date().getTime(); 
 
-        const totalUsuarios = usuarios.length;
+    const [equiposRes, dispositivosRes, ultimaMarcaRes] = await Promise.all([
+        api.get(`/equipos?_t=${t}`).catch(() => ({ data: { data: [] } })),
+        api.get(`/dispositivos?_t=${t}`).catch(() => ({ data: { data: [] } })),
+        api.get(`/marcas/ultima?_t=${t}`).catch(() => ({ data: { data: null } }))
+    ]);
 
-        const totalEquipos = equipos.length;
-        const equiposDisponibles = equipos.filter(e => e.estado === 'DISPONIBLE').length;
-
-        const prestamosActivos = prestamos.filter(p => p.estado === 'ACTIVO').length;
-        
-        const entradasHoy = marcasDeHoy.filter(m => m.tipo_marca === 'ENTRADA').length;
-        const salidasHoy = marcasDeHoy.filter(m => m.tipo_marca === 'SALIDA').length;
-
-        return {
-            data: {
-                usuarios: {
-                    total: totalUsuarios,
-                    label: 'Usuarios Registrados'
-                },
-                equipos: {
-                    disponibles: equiposDisponibles,
-                    totales: totalEquipos,
-                    label: 'Equipos Totales'
-                },
-                prestamos: {
-                    activos: prestamosActivos,
-                    label: 'Préstamos en curso'
-                },
-                marcas: {
-                    hoy: marcasDeHoy.length,
-                    entradas: entradasHoy,
-                    salidas: salidasHoy,
-                    label: 'Entradas / Salidas'
-                }
-            }
-        };
-    } catch (error) {
-        throw new Error('Error al cargar la información del servidor', { cause: error });
-    }
+    return {
+        equipos: equiposRes.data?.data || [],
+        dispositivos: dispositivosRes.data?.data || [],
+        ultimaMarca: ultimaMarcaRes.data?.data || null,
+    };
 };
