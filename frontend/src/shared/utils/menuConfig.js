@@ -38,7 +38,8 @@ export const sidebarMenuConfig = [
       {
         path: "/marcas/historial",
         label: "Reporte de marcas",
-        isBullet: true
+        isBullet: true,
+        soloAdmin: true,
       }
     ]
   },
@@ -56,17 +57,20 @@ export const sidebarMenuConfig = [
       {
         path: "/prestamos/nuevo",
         label: "Registrar préstamo",
-        isBullet: true
+        isBullet: true,
+        soloAdmin: true
       },
       {
         path: "/prestamos/devolucion",
         label: "Devolución de equipos",
-        isBullet: true
+        isBullet: true,
+        soloAdmin: true
       },
       {
         path: "/prestamos/historial",
         label: "Historial de préstamos",
-        isBullet: true
+        isBullet: true,
+        soloAdmin: true,
       }
     ]
   },  
@@ -75,6 +79,7 @@ export const sidebarMenuConfig = [
     title: "Departamentos",
     iconName: "departamento",
     expanded: false,
+    soloAdmin: true,
     subItems: [
       {
         path: "/departamentos",
@@ -88,6 +93,7 @@ export const sidebarMenuConfig = [
     title: "Usuarios",
     iconName: "usuarios",
     expanded: false,
+    soloAdmin: true,
     subItems: [
       {
         path: "/usuarios",
@@ -101,6 +107,7 @@ export const sidebarMenuConfig = [
     title: "Configuración",
     iconName: "configuracion",
     expanded: false,
+    soloAdmin: true,
     subItems: [
       {
         path: "/configuracion",
