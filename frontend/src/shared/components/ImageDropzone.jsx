@@ -15,7 +15,8 @@ export default function ImageDropzone({
     label = "Imagen del equipo", 
     className = '',
     error,
-    required = false
+    required = false,
+    maxSizeMB = 5,
 }) {
     const [preview, setPreview] = useState(initialImage);
     const [isDragging, setIsDragging] = useState(false);
@@ -60,9 +61,9 @@ export default function ImageDropzone({
             return;
         }
 
-        const maxSize = 5 * 1024 * 1024; // 5 MB
-        if (file.size > maxSize) {
-            alert('La imagen es muy pesada. El tamaño máximo permitido es de 5 MB.');
+        const sizeMB = file.size / (1024 * 1024);
+        if (sizeMB > maxSizeMB) {
+            alert(`El tamaño máximo por imagen es de ${maxSizeMB} MB.`);
             return;
         }
 
