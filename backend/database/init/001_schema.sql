@@ -9,13 +9,13 @@ USE gestion_marcas_equipos;
 -- ==========================================
 
 -- Tabla roles
-CREATE TABLE roles (
+CREATE TABLE IF NOT EXISTS roles (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL UNIQUE
 );
 
 -- Tabla departamentos (o carreras)
-CREATE TABLE departamentos (
+CREATE TABLE IF NOT EXISTS departamentos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     descripcion TEXT,
@@ -23,7 +23,7 @@ CREATE TABLE departamentos (
 );
 
 -- Tabla configuracion
-CREATE TABLE configuracion (
+CREATE TABLE IF NOT EXISTS configuracion (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre_institucion VARCHAR(150) NOT NULL,
     rango_ip_permitido VARCHAR(255),
@@ -36,7 +36,7 @@ CREATE TABLE configuracion (
 -- ==========================================
 
 -- Tabla usuarios
-CREATE TABLE usuarios (
+CREATE TABLE IF NOT EXISTS usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre_completo VARCHAR(150) NOT NULL,
     fecha_nacimiento DATE NOT NULL,
@@ -50,16 +50,15 @@ CREATE TABLE usuarios (
 );
 
 -- Tabla sesiones
-CREATE TABLE sesiones (
-    id VARCHAR(255) PRIMARY KEY COMMENT 'ID de sesión (cookie)',
-    usuario_id INT NOT NULL,
-    fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
-    fecha_expiracion DATETIME NOT NULL,
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
-);
+CREATE TABLE IF NOT EXISTS `sessions` (
+  `session_id` varchar(128) COLLATE utf8mb4_bin NOT NULL,
+  `expires` int(11) unsigned NOT NULL,
+  `data` mediumtext COLLATE utf8mb4_bin,
+  PRIMARY KEY (`session_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- Tabla tokens_recuperacion
-CREATE TABLE tokens_recuperacion (
+CREATE TABLE IF NOT EXISTS tokens_recuperacion (
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuario_id INT NOT NULL,
     token VARCHAR(255) NOT NULL UNIQUE,
@@ -73,9 +72,9 @@ CREATE TABLE tokens_recuperacion (
 -- ==========================================
 
 -- Tabla dispositivos
-CREATE TABLE dispositivos (
+CREATE TABLE IF NOT EXISTS dispositivos (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    identificador VARCHAR(255) NOT NULL UNIQUE COMMENT 'Identificador único generado por el sistema, no MAC',
+    identificador VARCHAR(255) NOT NULL UNIQUE,
     nombre VARCHAR(100) NOT NULL,
     descripcion TEXT,
     fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -85,7 +84,7 @@ CREATE TABLE dispositivos (
 );
 
 -- Tabla marcas
-CREATE TABLE marcas (
+CREATE TABLE IF NOT EXISTS marcas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuario_id INT NOT NULL,
     dispositivo_id INT NOT NULL,
@@ -102,16 +101,16 @@ CREATE TABLE marcas (
 -- ==========================================
 
 -- Tabla equipos
-CREATE TABLE equipos (
+CREATE TABLE IF NOT EXISTS equipos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     codigo VARCHAR(50) NOT NULL UNIQUE,
     descripcion TEXT NOT NULL,
-    imagen VARCHAR(255) COMMENT 'Ruta segura o nombre del archivo de la imagen',
+    imagen VARCHAR(255),
     estado ENUM('DISPONIBLE', 'PRESTADO', 'MANTENIMIENTO', 'INACTIVO') DEFAULT 'DISPONIBLE'
 );
 
 -- Tabla prestamos (Encabezado)
-CREATE TABLE prestamos (
+CREATE TABLE IF NOT EXISTS prestamos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuario_id INT NOT NULL COMMENT 'Usuario que recibe el préstamo',
     encargado_id INT NOT NULL COMMENT 'Encargado que aprueba el préstamo',
@@ -122,7 +121,7 @@ CREATE TABLE prestamos (
 );
 
 -- Tabla prestamo_detalle (Detalle)
-CREATE TABLE prestamo_detalle (
+CREATE TABLE IF NOT EXISTS prestamo_detalle (
     id INT AUTO_INCREMENT PRIMARY KEY,
     prestamo_id INT NOT NULL,
     equipo_id INT NOT NULL,
@@ -136,17 +135,11 @@ CREATE TABLE prestamo_detalle (
 -- 6. ÍNDICES DE OPTIMIZACIÓN (INDEXES)
 -- ==========================================
 
-CREATE INDEX idx_usuarios_departamento ON usuarios(departamento_id);
-
+-- Índices compuestos para búsquedas combinadas y reportes
 CREATE INDEX idx_marcas_usuario_fecha ON marcas(usuario_id, fecha);
-CREATE INDEX idx_marcas_fecha ON marcas(fecha);
-
 CREATE INDEX idx_dispositivos_usuario_estado ON dispositivos(usuario_id, estado);
-
-CREATE INDEX idx_equipos_estado ON equipos(estado);
-
 CREATE INDEX idx_prestamos_usuario_estado ON prestamos(usuario_id, estado);
-CREATE INDEX idx_prestamos_fecha ON prestamos(fecha);
 
-CREATE INDEX idx_prestamo_detalle_equipo ON prestamo_detalle(equipo_id);
-CREATE INDEX idx_prestamo_detalle_estado ON prestamo_detalle(estado_devolucion);
+-- Índices de rango (Fechas)
+CREATE INDEX idx_marcas_fecha ON marcas(fecha);
+CREATE INDEX idx_prestamos_fecha ON prestamos(fecha);
