@@ -27,35 +27,21 @@ export const getUltimaMarca = async (req, res) => {
 export const createMarca = async (req, res) => {
     try {
         const usuario_id = req.usuario.id;
-
         const dispositivo_id = req.body.dispositivo_id;
-
-        const direccion_ip = req.ip;
-
+        
+        let rawIp = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket?.remoteAddress || req.ip;
+        let direccion_ip = rawIp.replace('::ffff:', '');
+        if (direccion_ip === '::1') direccion_ip = '127.0.0.1';
         if (!dispositivo_id) {
-            throw new Error(
-                "Debe seleccionar un dispositivo"
-            );
+            throw new Error("Debe seleccionar un dispositivo");
         }
-
-        const marca =
-            await marcasService.createMarca(
-                usuario_id,
-                dispositivo_id,
-                direccion_ip
-            );
-
-        return exito(
-            res,
-            'Marca registrada exitosamente.',
-            marca,
-            201
+        const marca = await marcasService.createMarca(
+            usuario_id,
+            dispositivo_id,
+            direccion_ip
         );
+        return exito(res, 'Marca registrada exitosamente.', marca, 201);
     } catch (err) {
-        return error(
-            res,
-            'Error al registrar la marca',
-            err
-        );
+        return error(res, 'Error al registrar la marca', err);
     }
 };

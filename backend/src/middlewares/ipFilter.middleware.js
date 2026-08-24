@@ -3,11 +3,12 @@ import * as configDao from '../daos/configuracion.dao.js';
 
 const ipEnRango = (ip, rango) => {
     if (!rango) return true;
-    
     try {
         const [red, bits] = rango.split('/');
-        const mascara = ~(0xFFFFFFFF >>> parseInt(bits));
         
+        if(!bits) return ip === red;
+
+        const mascara = ~(0xFFFFFFFF >>> parseInt(bits));
         const ipNum = ip.split('.').reduce((acc, oct) => (acc << 8) + parseInt(oct), 0);
         const redNum = red.split('.').reduce((acc, oct) => (acc << 8) + parseInt(oct), 0);
         
@@ -24,16 +25,18 @@ export const validarRangoIP = async (req, res, next) => {
 
         if (!rango) return next();
 
-        const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() 
-                   || req.socket?.remoteAddress 
-                   || '';
+        let ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket?.remoteAddress || '';
+        
+        let ipLimpia = ip.replace('::ffff:', '');
 
-        const ipLimpia = ip.replace('::ffff:', '');
+        if (ipLimpia === '::1') ipLimpia = '127.0.0.1';
+
+        if (ipLimpia === '127.0.0.1') return next();
 
         if (!ipEnRango(ipLimpia, rango)) {
             return res.status(403).json({
                 success: false,
-                message: `Acceso denegado. Tu IP no está dentro del rango permitido.`
+                message: `Acceso denegado. Tu IP (${ipLimpia}) no está dentro del rango permitido.`
             });
         }
 

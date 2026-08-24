@@ -23,6 +23,9 @@ export const useDashboardStats = () => {
                 const hoy = new Date();
                 const rawData = await getAdminDashboardData(hoy.getFullYear(), hoy.getMonth() + 1, hoy.getDate());
 
+                const cantidadEntradas = rawData.marcas.filter(m => m.Entrada != null).length;
+                const cantidadSalidas = rawData.marcas.filter(m => m.Salida != null).length;
+
                 setStats({
                     esAdmin: true,
                     usuarios: { total: rawData.usuarios.length, label: 'Usuarios Registrados' },
@@ -34,8 +37,8 @@ export const useDashboardStats = () => {
                     prestamos: { activos: rawData.prestamos.filter(p => p.estado === 'ACTIVO').length, label: 'Préstamos en curso' },
                     marcas: {
                         hoy: rawData.marcas.length,
-                        entradas: rawData.marcas.filter(m => m.tipo_marca === 'ENTRADA').length,
-                        salidas: rawData.marcas.filter(m => m.tipo_marca === 'SALIDA').length,
+                        entradas: cantidadEntradas,
+                        salidas: cantidadSalidas,
                         label: 'Entradas / Salidas'
                     },
                     dispositivos: { total: rawData.dispositivos.length, label: 'Dispositivos Registrados' },
