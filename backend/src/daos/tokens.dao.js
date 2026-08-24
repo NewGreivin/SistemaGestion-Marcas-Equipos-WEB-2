@@ -4,8 +4,8 @@ import pool from '../config/database.js';
 
 export const createToken = async (usuario_id, token, fecha_expiracion) => {
     await pool.query(
-        'INSERT INTO tokens_recuperacion (usuario_id, token, fecha_expiracion) VALUES (?, ?, ?)',
-        [usuario_id, token, fecha_expiracion]
+        'INSERT INTO tokens_recuperacion (usuario_id, token, fecha_expiracion) VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 15 MINUTE))',
+        [usuario_id, token]
     );
 };
 

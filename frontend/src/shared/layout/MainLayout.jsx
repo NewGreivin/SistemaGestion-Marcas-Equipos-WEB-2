@@ -2,6 +2,7 @@
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
+import SessionExpiredModal from '../components/SessionExpiredModal';
 
 export default function MainLayout() {
     return (
@@ -13,6 +14,7 @@ export default function MainLayout() {
                     <Outlet />
                 </main>
             </div>
+            <SessionExpiredModal />
         </div>
     );
 }
