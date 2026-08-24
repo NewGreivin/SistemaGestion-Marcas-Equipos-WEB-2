@@ -11,6 +11,7 @@ import NuevoPrestamoScreen from '../module/prestamos/screens/NuevoPrestamoScreen
 import DevolucionScreen from '../module/prestamos/screens/DevolucionScreen';
 import HistorialPrestamosScreen from '../module/prestamos/screens/HistorialPrestamosScreen';
 import Perfil from '../module/perfil/screens/PerfilScreen';
+import Configuracion from '../module/configuracion/screens/ConfiguracionScreen';
 
 function App() {
     return (
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/prestamos/historial" element={<HistorialPrestamosScreen />}/>
                 <Route path="/perfil" element={<Perfil />} />
                 <Route path="/prestamos/equipos" element={<EquiposScreen />} />
+                <Route path="/configuracion" element={<Configuracion />} />
             </Route>
         </Routes>
     );
