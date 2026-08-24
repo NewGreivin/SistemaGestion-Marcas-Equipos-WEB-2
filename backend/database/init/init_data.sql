@@ -5,19 +5,20 @@ USE gestion_marcas_equipos;
 -- ==========================================
 INSERT INTO roles (nombre) VALUES 
 ('Administrador'),
+("Soporte"),
 ('Usuario');
 
 -- ==========================================
 -- DEPARTAMENTOS
 -- ==========================================
 INSERT INTO departamentos (nombre, descripcion, encargado) VALUES 
-('Tecnologías de Información', 'Carrera de Ingeniería en Tecnologías de Información', 'Prof. Juan Pablo Rodriguez');
+('Tecnologías de Informacion', 'Carrera de Ingeniería en TecnologIas de Información', 'Prof. Juan Pablo Rodriguez');
 
 -- ==========================================
 -- CONFIGURACIÓN
 -- ==========================================
 INSERT INTO configuracion (nombre_institucion, rango_ip_permitido, tiempo_maximo_sesion, tamano_maximo_archivos) VALUES 
-('Universidad Técnica Nacional Sede Guanacaste', '192.168.1.0/24', 60, 5);
+('Universidad Tecnica Nacional Sede Guanacaste', '192.168.1.0', 60, 5);
 
 -- ==========================================
 -- USUARIOS
@@ -44,7 +45,7 @@ INSERT INTO dispositivos (identificador, nombre, descripcion, estado, usuario_id
 -- MARCAS (Le corresponde a otro módulo, solo 1 de prueba)
 -- ==========================================
 INSERT INTO marcas (usuario_id, dispositivo_id, fecha, hora, tipo_marca, direccion_ip) VALUES 
-(2, 1, CURDATE(), '08:00:00', 'ENTRADA', '192.168.1.10');
+(2, 1, CURDATE(), '08:00:00', 'ENTRADA', '192.168.1.2');
 
 -- ==========================================
 -- EQUIPOS (Le corresponde a otro módulo, solo 1 de prueba)

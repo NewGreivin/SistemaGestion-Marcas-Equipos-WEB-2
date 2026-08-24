@@ -11,7 +11,7 @@ import Texto from '../../../shared/components/Texto';
 import Titulo from '../../../shared/components/Titulo';
 import Card from '../../../shared/components/Card';
 import Avatar from '../../../shared/components/Avatar';
-import Badge from '../../../shared/components/Badge';
+import PasswordField from '../../../shared/components/PasswordField';
 
 export default function PerfilScreen() {
     const {
@@ -153,6 +153,50 @@ export default function PerfilScreen() {
                                 </div>
                             </div>
 
+                            <hr className="my-4 text-muted" />
+                            <Titulo
+                                tipografia="h5"
+                                texto="Cambiar contraseña (Opcional)"
+                                className="mb-3 fw-bold"
+                                color_text="black"
+                                alineado="left"
+                            />
+                            <div className="row g-3 mb-4">
+                                <div className="col-12 col-md-4">
+                                    <PasswordField
+                                        id="passwordActual"
+                                        name="passwordActual"
+                                        label="Contraseña Actual"
+                                        placeholder="Requerida para cambiar"
+                                        value={formData.passwordActual || ''}
+                                        onChange={handleChange}
+                                        error={errores.passwordActual}
+                                    />
+                                </div>
+                                <div className="col-12 col-md-4">
+                                    <PasswordField
+                                        id="nuevaPassword"
+                                        name="nuevaPassword"
+                                        label="Nueva Contraseña"
+                                        placeholder="Mínimo 8 caracteres"
+                                        value={formData.nuevaPassword || ''}
+                                        onChange={handleChange}
+                                        error={errores.nuevaPassword}
+                                    />
+                                </div>
+                                <div className="col-12 col-md-4">
+                                    <PasswordField
+                                        id="confirmacionNuevaPassword"
+                                        name="confirmacionNuevaPassword"
+                                        label="Confirmar Nueva"
+                                        placeholder="Repite la contraseña"
+                                        value={formData.confirmacionNuevaPassword || ''}
+                                        onChange={handleChange}
+                                        error={errores.confirmacionNuevaPassword}
+                                    />
+                                </div>
+                            </div>
+
                             <div className="mt-4">
                                 <Button
                                     type="submit"
@@ -187,20 +231,14 @@ export default function PerfilScreen() {
                             texto={formData.nombre_completo}
                             className="fw-bold mb-1"
                             color_text="black"
-                            alineado = "center"
+                            alineado="center"
                         />
 
                         <Texto
                             texto={`@${formData.username}`}
                             color_text="grey"
                             className="mb-3"
-                            alineado = "center"
-                        />
-
-                        <Badge
-                            label={formData.rol_nombre || 'Usuario'}
-                            variant="success"
-                            pill={true}
+                            alineado="center"
                         />
                     </Card>
                 </div>

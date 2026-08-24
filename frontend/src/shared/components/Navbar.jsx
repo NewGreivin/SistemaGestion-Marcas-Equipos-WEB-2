@@ -4,6 +4,7 @@
  * Uso: Muestra la identidad del sistema y el menú del usuario autenticado.
  */
 
+import { useEffect, useState } from 'react';
 import Avatar from './Avatar';
 import Texto from './Texto';
 import Icon from './icon';
@@ -11,9 +12,22 @@ import NavLink from './NavLink';
 import Button from './Button';
 import Dropdown from './Dropdown';
 import useAuth from '../../module/auth/hooks/useAuth';
+import configuracionService from 
+'../../module/configuracion/services/configuracion.service';
 
 const Navbar = () => {
     const { usuario, logout, loading } = useAuth();
+    const [nombreInstitucion, setNombreInstitucion] = useState('Bitácora Central');
+    useEffect(() => {
+        configuracionService.getConfiguracion()
+            .then(res => {
+                const config = res?.data || res;
+                if (config?.nombre_institucion) {
+                    setNombreInstitucion(config.nombre_institucion);
+                }
+            })
+            .catch(() => {}); 
+    }, []);
 
     const nombre = usuario?.nombre_completo;
     const identificador = usuario?.username;
@@ -27,7 +41,7 @@ const Navbar = () => {
             <div className="container-fluid">
                 <div>
                     <Texto
-                        texto="Bitácora Central"
+                        texto={nombreInstitucion}
                         color_text="white"
                         tamano_letra="5"
                         className="fw-bold navbar-brand mb-0 p-0"

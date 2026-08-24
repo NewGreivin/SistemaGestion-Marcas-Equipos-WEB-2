@@ -1,7 +1,7 @@
 // Autor: Greivin Arguedas
 
 import { Router } from 'express';
-import { getProfile, createUser, updateProfile, changePassword, getAllUsers, deleteUser, updateUserById } 
+import { getProfile, createUser, updateProfile, changePassword, getAllUsers, deleteUser, updateUserById, getRoles } 
     from '../controllers/users.controller.js';
 import { validarSesion, esAdministrador } from '../middlewares/auth.middleware.js';
 import { validateUpdateProfile, validateCreateUser, validateChangePassword, validateIdParam } 
@@ -13,6 +13,7 @@ const router = Router();
 router.get('/profile', validarSesion, getProfile);
 router.put('/profile', validarSesion, validateUpdateProfile, updateProfile);
 router.put('/change-password', validarSesion, validateChangePassword, changePassword);
+router.get('/roles', validarSesion, getRoles);
 
 // Rutas CRUD de usuarios (Solo Administrador)
 router.get('/', validarSesion, esAdministrador, getAllUsers);

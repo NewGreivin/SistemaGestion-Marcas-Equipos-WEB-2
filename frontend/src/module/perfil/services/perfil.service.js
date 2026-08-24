@@ -1,4 +1,4 @@
-//Autor: Greivin Eliecer A.G
+// Autor: Greivin Eliecer A.G
 
 import api from '../../../api/api';
 
@@ -12,4 +12,9 @@ const updatePerfil = async (datos) => {
     return response.data;
 };
 
-export default { getPerfil, updatePerfil };
+const changePassword = async (datos) => {
+    const response = await api.put('/usuarios/change-password', datos);
+    return response.data;
+};
+
+export default { getPerfil, updatePerfil, changePassword };

@@ -13,34 +13,42 @@ export default function Dashboard() {
 
             {!loading && !error && stats && (
                 <div className="row g-4">
-                    <div className="col-12 col-md-6">
-                        <StatCard 
-                            title="USUARIOS REGISTRADOS" 
-                            value={stats.usuarios.total.toString()} 
-                            subtitle={stats.usuarios.label} 
-                        />
-                    </div>
-                    <div className="col-12 col-md-6">
-                        <StatCard 
-                            title="EQUIPOS DISPONIBLES" 
-                            value={`${stats.equipos.disponibles} / ${stats.equipos.totales}`} 
-                            subtitle={stats.equipos.label} 
-                        />
-                    </div>
-                    <div className="col-12 col-md-6">
-                        <StatCard 
-                            title="PRÉSTAMOS ACTIVOS" 
-                            value={stats.prestamos.activos.toString()} 
-                            subtitle={stats.prestamos.label} 
-                        />
-                    </div>
-                    <div className="col-12 col-md-6">
-                        <StatCard 
-                            title="MARCAS REGISTRADAS HOY" 
-                            value={stats.marcas.hoy.toString()} 
-                            subtitle={`${stats.marcas.entradas} Entradas / ${stats.marcas.salidas} Salidas`} 
-                        />
-                    </div>
+                    {stats.esAdmin ? (
+                        /* VISTA DE ADMINISTRADOR */
+                        <>
+                            <div className="col-12 col-md-6">
+                                <StatCard title="USUARIOS REGISTRADOS" value={stats.usuarios.total.toString()} subtitle={stats.usuarios.label} />
+                            </div>
+                            <div className="col-12 col-md-6">
+                                <StatCard title="EQUIPOS DISPONIBLES" value={`${stats.equipos.disponibles} / ${stats.equipos.totales}`} subtitle={stats.equipos.label} />
+                            </div>
+                            <div className="col-12 col-md-6">
+                                <StatCard title="PRÉSTAMOS ACTIVOS" value={stats.prestamos.activos.toString()} subtitle={stats.prestamos.label} />
+                            </div>
+                            <div className="col-12 col-md-6">
+                                <StatCard title="MARCAS REGISTRADAS HOY" value={stats.marcas.hoy.toString()} subtitle={`${stats.marcas.entradas} Entradas / ${stats.marcas.salidas} Salidas`} />
+                            </div>
+                            <div className="col-12 col-md-6">
+                                <StatCard title="MIS DISPOSITIVOS" value={stats.dispositivos.total.toString()} subtitle={stats.dispositivos.label} />
+                            </div>
+                            <div className="col-12 col-md-6">
+                                <StatCard title="TU ÚLTIMA MARCA" value={stats.ultimaMarca ? stats.ultimaMarca.tipo_marca : 'Sin registros'} subtitle={stats.ultimaMarca ? 'Registrada en el sistema' : 'Registra tu asistencia'} />
+                            </div>
+                        </>
+                    ) : (
+                        /* VISTA DE USUARIO NORMAL */
+                        <>
+                            <div className="col-12 col-md-6">
+                                <StatCard title="MIS DISPOSITIVOS" value={stats.dispositivos.total.toString()} subtitle={stats.dispositivos.label} />
+                            </div>
+                            <div className="col-12 col-md-6">
+                                <StatCard title="TU ÚLTIMA MARCA" value={stats.ultimaMarca ? stats.ultimaMarca.tipo_marca : 'Sin registros'} subtitle={stats.ultimaMarca ? 'Registrada en el sistema' : 'Registra tu asistencia'} />
+                            </div>
+                            <div className="col-12 col-md-6">
+                                <StatCard title="EQUIPOS DISPONIBLES" value={`${stats.equipos.disponibles} / ${stats.equipos.totales}`} subtitle={stats.equipos.label} />
+                            </div>
+                        </>
+                    )}
                 </div>
             )}
         </div>

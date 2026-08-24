@@ -7,7 +7,7 @@ import { validateConfiguracion } from '../validators/config.validator.js';
 
 const router = Router();
 
-router.get('/', validarSesion, getConfiguracion);
+router.get('/', getConfiguracion);
 router.put('/', validarSesion, esAdministrador, validateConfiguracion, updateConfiguracion);
 
 export default router;

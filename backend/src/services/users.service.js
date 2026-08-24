@@ -74,3 +74,7 @@ export const updateUserById = async (id, data) => {
 
     await usuariosDao.updateUserById(id, data);
 };
+
+export const getRoles = async () => {
+    return await usuariosDao.findAllRoles();
+};
