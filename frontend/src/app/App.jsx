@@ -12,6 +12,8 @@ import DevolucionScreen from '../module/prestamos/screens/DevolucionScreen';
 import HistorialPrestamosScreen from '../module/prestamos/screens/HistorialPrestamosScreen';
 import Perfil from '../module/perfil/screens/PerfilScreen';
 import Configuracion from '../module/configuracion/screens/ConfiguracionScreen';
+import GestionDepartamentosScreen from '../module/departamentos/screens/GestionDepartamentosScreen';
+import ReporteMarcasScreen from '../module/marcas/screens/ReporteMarcasScreen';
 
 function App() {
     return (
@@ -30,6 +32,8 @@ function App() {
                 <Route path="/perfil" element={<Perfil />} />
                 <Route path="/prestamos/equipos" element={<EquiposScreen />} />
                 <Route path="/configuracion" element={<Configuracion />} />
+                <Route path="/departamentos" element={<GestionDepartamentosScreen />} />
+                <Route path="/marcas/historial" element={<ReporteMarcasScreen />} />
             </Route>
         </Routes>
     );
