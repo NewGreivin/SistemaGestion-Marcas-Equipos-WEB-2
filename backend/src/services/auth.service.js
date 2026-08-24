@@ -1,5 +1,6 @@
 // Autor: Greivin Arguedas
 
+import { sendRecoveryEmail } from '../utils/mailer.js';
 import bcrypt from 'bcrypt';
 import * as usuariosDao from '../daos/users.dao.js';
 import * as tokensDao from '../daos/tokens.dao.js';
@@ -52,14 +53,18 @@ export const loginUser = async (identificador, password) => {
 
 export const requestPasswordRecovery = async (identificador) => {
     const usuario = await usuariosDao.findByCorreoOrUsername(identificador);
-    if (!usuario) return null; 
+    
+    if (!usuario || !usuario.correo) return null; 
+    const token = Math.floor(100000 + Math.random() * 900000).toString();
 
-    const token = Math.random().toString(36).substr(2, 10) + Math.random().toString(36).substr(2, 10);
-    const fechaExpiracion = new Date();
-    fechaExpiracion.setHours(fechaExpiracion.getHours() + 1);
-
-    await tokensDao.createToken(usuario.id, token, fechaExpiracion);
-    return token;
+    await tokensDao.createToken(usuario.id, token);
+    
+    try {
+        await sendRecoveryEmail(usuario.correo, token);
+    } catch (emailErr) {
+        console.warn('No se pudo enviar el correo. CÓDIGO SIMULADO:', token);
+    }
+    return true;
 };
 
 export const resetPassword = async (token, newPassword, confirmNewPassword) => {

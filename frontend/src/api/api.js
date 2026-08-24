@@ -42,7 +42,7 @@ async function customFetch(endpoint, options = {}) {
                     // Lo ignoramos
                 }
 
-                //window.location.href = '/login';
+                window.dispatchEvent(new Event('session-expired'));
             }
 
             throw {

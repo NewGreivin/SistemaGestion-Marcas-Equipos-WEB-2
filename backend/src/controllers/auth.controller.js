@@ -46,11 +46,10 @@ export const logout = async (req, res) => {
 
 export const recoverPassword = async (req, res) => {
     try {
-        const token = await authService.requestPasswordRecovery(req.body.identificador);
-        const enlace = token ? `${process.env.CLIENT_URL}/restablecer-password?token=${token}` : null;
-        return exito(res, 'Si el usuario existe, se ha enviado un enlace.', enlace ? { enlace_simulado: enlace } : null);
+        await authService.requestPasswordRecovery(req.body.identificador);
+        return exito(res, 'Si el usuario existe, se ha enviado un código.');
     } catch (err) {
-        return error(res, 'Error al procesar recuperación', err);
+        return error(res, err.message || 'Error al procesar recuperación', err);
     }
 };
 
