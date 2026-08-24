@@ -22,6 +22,7 @@
     "multer": "^2.2.0",
     "mysql2": "^3.22.5",
     "node": "^26.4.0",
+    "nodemailer": "^9.0.5",
     "pdfkit": "^0.19.1"
   },
   "devDependencies": {
