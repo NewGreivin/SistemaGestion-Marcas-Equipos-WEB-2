@@ -21,7 +21,6 @@ import Card from '../../../shared/components/Card';
 
 export default function GestionDepartamentosScreen() {
     
-    // Extrayendo todo del Hook, incluyendo los errores (formErrors)
     const {
         departamentos,
         loading,
@@ -66,7 +65,7 @@ export default function GestionDepartamentosScreen() {
                     placeholder="Ej: Ingeniería de Sistemas"
                     value={formData.nombre}
                     onChange={handleInputChange}
-                    error={formErrors.nombre} // Aquí está la magia roja
+                    error={formErrors.nombre} 
                 />
 
                 <TextArea
@@ -76,7 +75,7 @@ export default function GestionDepartamentosScreen() {
                     rows="3"
                     value={formData.descripcion}
                     onChange={handleInputChange}
-                    error={formErrors.descripcion} // Aquí está la magia roja
+                    error={formErrors.descripcion} 
                 />
 
                 <TextInput
@@ -86,7 +85,7 @@ export default function GestionDepartamentosScreen() {
                     className="mb-4"
                     value={formData.encargado}
                     onChange={handleInputChange}
-                    error={formErrors.encargado} // Aquí está la magia roja
+                    error={formErrors.encargado} 
                 />
             </FormModal>
 

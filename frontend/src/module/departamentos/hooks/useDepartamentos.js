@@ -119,12 +119,10 @@ export default function useDepartamentos() {
     const validarFormulario = () => {
         const errores = {};
         
-        // El nombre SIEMPRE es obligatorio
         if (!formData.nombre.trim()) {
             errores.nombre = "El nombre es obligatorio";
         }
         
-        // Descripción y encargado SOLO son obligatorios al CREAR (!departamentoEditando)
         if (!departamentoEditando) {
             if (!formData.descripcion.trim()) {
                 errores.descripcion = "La descripción es obligatoria";
