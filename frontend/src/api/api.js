@@ -69,6 +69,9 @@ const api = {
     put: (endpoint, body, options) => 
         customFetch(endpoint, { method: 'PUT', body: body instanceof FormData ? body : JSON.stringify(body), ...options }),
     
+    patch: (endpoint, body, options) => 
+        customFetch(endpoint, { method: 'PATCH', body: body instanceof FormData ? body : JSON.stringify(body), ...options }),
+    
     delete: (endpoint, options) => 
         customFetch(endpoint, { method: 'DELETE', ...options })
 };

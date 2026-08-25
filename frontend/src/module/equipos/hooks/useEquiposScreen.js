@@ -35,7 +35,7 @@ export const useEquiposScreen = () => {
     };
 
     const columnasEquipos = [
-        { key: 'codigo', label: 'CÓDIGO' },
+        { key: 'codigo_ui', label: 'CÓDIGO' },
         { key: 'descripcion', label: 'DESCRIPCIÓN' },
         { key: 'estado_badge', label: 'ESTADO' }
     ];
