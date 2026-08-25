@@ -44,7 +44,7 @@ export default function EquiposScreen() {
     const datosTabla = equipos.map((equipo) => {
         return {
             ...equipo,
-            codigo: <span className="fw-bold">{equipo.codigo}</span>,
+            codigo_ui: <span className="fw-bold">{equipo.codigo}</span>,
             estado_badge: (
                 <Badge
                     label={equipo.estado}
