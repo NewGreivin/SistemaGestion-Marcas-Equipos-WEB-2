@@ -4,7 +4,6 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 
-// Asegurarse de que el directorio exista
 const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'equipos');
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
@@ -29,10 +28,36 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
-export const uploadEquipoImage = multer({
-    storage: storage,
-    limits: {
-        fileSize: 5 * 1024 * 1024 // 5 MB max
-    },
-    fileFilter: fileFilter
-});
+const getLimiteDinamico = async () => {
+    try {
+        const config = await configuracionDao.getConfig();
+        const mb = config?.tamano_maximo_archivos || 5;
+        return mb * 1024 * 1024;
+    } catch {
+        return 5 * 1024 * 1024;
+    }
+};
+
+export const uploadEquipoImage = {
+    single: (fieldName) => async (req, res, next) => {
+        const fileSize = await getLimiteDinamico();
+        const upload = multer({
+            storage,
+            limits: { fileSize },
+            fileFilter
+        }).single(fieldName);
+        upload(req, res, (err) => {
+            if (err instanceof multer.MulterError && err.code === 'LIMIT_FILE_SIZE') {
+                const config = fileSize / (1024 * 1024);
+                return res.status(400).json({
+                    success: false,
+                    message: `El archivo supera el tamaño máximo permitido de ${config} MB.`
+                });
+            }
+            if (err) {
+                return res.status(400).json({ success: false, message: err.message });
+            }
+            next();
+        });
+    }
+};

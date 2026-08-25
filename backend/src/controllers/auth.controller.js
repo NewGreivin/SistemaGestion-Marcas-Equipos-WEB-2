@@ -3,18 +3,6 @@
 import * as authService from '../services/auth.service.js';
 import { exito, error } from '../utils/respuestaJson.js';
 
-export const registro = async (req, res) => {
-    try {
-        const insertId = await authService.registerUser(req.body);
-        return exito(res, 'Usuario registrado exitosamente.', { id: insertId }, 201);
-    } catch (err) {
-        if (err.message.includes('registrado') || err.message.includes('coinciden')) {
-            return res.status(400).json({ success: false, message: err.message });
-        }
-        return error(res, 'Error al registrar el usuario', err);
-    }
-};
-
 export const login = async (req, res) => {
     try {
         const { identificador, password } = req.body;

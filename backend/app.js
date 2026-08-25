@@ -36,7 +36,7 @@ const MySQLStore = expressMySQLSession(session);
 const sessionStore = new MySQLStore({
     clearExpired: true,
     checkExpirationInterval: 900000, // 15 minutos
-    expiration: 86400000 // 1 día por defecto
+    expiration: 86400000
 }, pool);
 
 app.use(session({

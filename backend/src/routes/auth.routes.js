@@ -1,7 +1,7 @@
 // Autor: Greivin Arguedas
 
 import { Router } from 'express';
-import { registro, login, logout, recoverPassword, resetPassword } 
+import { login, logout, recoverPassword, resetPassword } 
     from '../controllers/auth.controller.js';
 import { validarSesion } from '../middlewares/auth.middleware.js';
 import { validateRegistro, validateLogin, validateRecover, validateReset } 
@@ -9,7 +9,6 @@ import { validateRegistro, validateLogin, validateRecover, validateReset }
 
 const router = Router();
 
-router.post('/register', validateRegistro, registro);
 router.post('/login', validateLogin, login);
 router.post('/logout', validarSesion, logout);
 router.post('/recover-password', validateRecover, recoverPassword);

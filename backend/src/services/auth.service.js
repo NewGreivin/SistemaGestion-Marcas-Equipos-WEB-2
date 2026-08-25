@@ -6,25 +6,6 @@ import * as usuariosDao from '../daos/users.dao.js';
 import * as tokensDao from '../daos/tokens.dao.js';
 import * as configDao from '../daos/configuracion.dao.js';
 
-export const registerUser = async (data) => {
-    const existente = await usuariosDao.findByCorreoOrUsername(data.correo);
-    const existenteUser = await usuariosDao.findByCorreoOrUsername(data.username);
-    
-    if (existente || existenteUser) {
-        throw new Error('El correo o nombre de usuario ya se encuentra registrado.');
-    }
-
-    if (data.password !== data.confirmar_password) {
-        throw new Error('Las contraseñas no coinciden.');
-    }
-
-    const password_hash = await bcrypt.hash(data.password, 10);
-    const rol_id = await usuariosDao.findRolByName('Usuario') || 2; 
-
-    const nuevoUsuario = { ...data, password_hash, rol_id };
-    return await usuariosDao.create(nuevoUsuario);
-};
-
 export const loginUser = async (identificador, password) => {
     let usuario = await usuariosDao.findByCorreoOrUsername(identificador);
     if (!usuario) throw new Error('Credenciales inválidas.');
