@@ -16,8 +16,14 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "express-mysql-session": "^3.0.3",
+    "express-session": "^1.19.0",
+    "express-validator": "^7.3.2",
+    "multer": "^2.2.0",
     "mysql2": "^3.22.5",
-    "node": "^26.4.0"
+    "node": "^26.4.0",
+    "nodemailer": "^9.0.5",
+    "pdfkit": "^0.19.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
